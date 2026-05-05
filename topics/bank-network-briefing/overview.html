@@ -1,0 +1,1433 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>bank-network-briefing - Overview</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css" type="text/css" />
+    <style>
+      :root {
+
+        --bg: #ffffff;
+        --panel: #f7fbff;
+        --surface: #eef6ff;
+        --surface-2: #e6f0fb;
+        --text: #101828;
+        --secondary: #26384f;
+        --muted: #5b6b80;
+        --quiet: #7a8798;
+        --brand: #006fd6;
+        --accent: #0072ce;
+        --accent-hover: #003b71;
+        --sky: #23a8e0;
+        --green: #0f8f63;
+        --border: rgba(0, 77, 153, 0.16);
+        --border-subtle: rgba(0, 77, 153, 0.10);
+        --font: "Paperlogy", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        --mono: "Paperlogy", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        --ui-bg: #e9eef5;
+        --ui-strip: #dbe4ee;
+        --ui-card: #ffffff;
+        --ui-text: #172033;
+        --ui-muted: #68758a;
+        --ui-accent: #006fd6;
+        --ui-accent-rgb: 0, 111, 214;
+        --detail-scale: 0.52;
+        --thumb-scale: 0.078125;
+      }
+
+      * { box-sizing: border-box; }
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: var(--ui-bg);
+        color: var(--ui-text);
+        font-family: var(--font);
+        letter-spacing: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+      button { font: inherit; }
+      .overview-shell { display: grid; grid-template-columns: 348px minmax(0, 1fr); width: 100vw; height: 100vh; overflow: hidden; }
+      .strip { min-width: 0; overflow-y: auto; padding: 16px; background: var(--ui-strip); border-right: 1px solid rgba(0, 77, 153, 0.16); }
+      .strip-title { display: flex; align-items: center; gap: 9px; margin: 2px 4px 14px; color: var(--ui-muted); font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
+      .strip-title::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--ui-accent); }
+      .strip-grid { display: grid; grid-template-columns: repeat(2, 150px); gap: 12px; }
+      .thumb { position: relative; width: 150px; height: 84.375px; padding: 0; overflow: hidden; border: 2px solid transparent; border-radius: 8px; background: #fff; box-shadow: 0 3px 12px rgba(16, 40, 72, 0.16); cursor: pointer; }
+      .thumb:hover { border-color: rgba(var(--ui-accent-rgb), 0.45); }
+      .thumb.active { border-color: var(--ui-accent); box-shadow: 0 6px 18px rgba(var(--ui-accent-rgb), 0.28); }
+      .thumb-stage { position: absolute; inset: 0 auto auto 0; width: 1920px; height: 1080px; transform: scale(var(--thumb-scale)); transform-origin: 0 0; pointer-events: none; }
+      .thumb-label { position: absolute; top: 5px; left: 6px; z-index: 50; display: inline-flex; align-items: center; gap: 5px; padding: 3px 6px; border-radius: 4px; background: rgba(13, 28, 48, 0.88); color: #fff; font-size: 9px; font-weight: 700; }
+      .thumb-label code { padding: 1px 4px; border-radius: 3px; background: var(--ui-accent); color: #fff; font-family: var(--font); font-size: 8px; }
+      .main { min-width: 0; height: 100vh; display: flex; flex-direction: column; padding: 20px 24px 24px; }
+      .main-header { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+      .main-title { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 700; }
+      .main-title::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--ui-accent); }
+      .header-right, .nav { display: flex; align-items: center; gap: 12px; }
+      .nav-btn, .aim-btn { border: 1px solid rgba(0, 77, 153, 0.16); background: var(--ui-card); color: var(--ui-text); cursor: pointer; box-shadow: 0 1px 4px rgba(16, 40, 72, 0.10); }
+      .nav-btn { width: 36px; height: 36px; border-radius: 50%; font-size: 18px; line-height: 1; }
+      .nav-btn:disabled { opacity: 0.35; cursor: default; }
+      .nav-btn:not(:disabled):hover, .aim-btn:hover, .aim-btn.active { background: var(--ui-accent); border-color: var(--ui-accent); color: #fff; }
+      .aim-btn { min-height: 36px; padding: 0 14px; border-radius: 8px; font-size: 13px; font-weight: 700; }
+      .nav-index { min-width: 150px; text-align: center; color: var(--ui-muted); font-size: 13px; font-weight: 700; letter-spacing: 1px; }
+      .nav-index .current { color: var(--ui-accent); }
+      .nav-index .skill { display: inline-flex; margin-left: 8px; padding: 3px 7px; border-radius: 5px; background: rgba(255,255,255,0.7); color: var(--ui-text); letter-spacing: 0; }
+      .detail { min-height: 0; flex: 1 1 auto; display: flex; align-items: center; justify-content: center; }
+      .detail-frame { position: relative; width: calc(1920px * var(--detail-scale)); height: calc(1080px * var(--detail-scale)); max-width: 100%; overflow: hidden; border-radius: 14px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 77, 153, 0.16), 0 18px 50px rgba(16, 40, 72, 0.22); }
+      .detail-item { position: absolute; inset: 0; display: none; width: 1920px; height: 1080px; transform: scale(var(--detail-scale)); transform-origin: 0 0; }
+      .detail-item.active { display: block; }
+      .detail-stage { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+      .brand { position: absolute; left: 104px; bottom: 35px; z-index: 5; display: inline-flex; align-items: center; gap: 12px; color: var(--quiet); font: 600 18px/1.2 var(--font); }
+      .brand-dot { width: 28px; height: 28px; object-fit: contain; display: block; }
+      .slide-num { position: absolute; right: 104px; bottom: 35px; z-index: 5; display: inline-flex; align-items: center; gap: 8px; color: var(--quiet); font: 600 18px/1.2 var(--font); }
+      .slide-num .skill { color: var(--accent-hover); font-size: 14px; text-transform: uppercase; }
+      .slide-num .sep { color: rgba(0, 77, 153, 0.35); }
+      .aim-overlay { position: fixed; z-index: 9998; display: none; border: 2px solid var(--ui-accent); border-radius: 3px; background: rgba(var(--ui-accent-rgb), 0.12); pointer-events: none; }
+      .aim-tooltip { position: fixed; z-index: 9999; display: none; max-width: 560px; padding: 7px 10px; border-radius: 7px; background: #172033; color: #fff; font-size: 11px; line-height: 1.35; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; box-shadow: 0 8px 24px rgba(16, 40, 72, 0.26); }
+      .aim-toast { position: fixed; right: 24px; bottom: 22px; z-index: 10000; max-width: 480px; padding: 14px 18px; border-radius: 10px; background: #172033; color: #fff; opacity: 0; transform: translateY(10px); transition: opacity 0.18s ease, transform 0.18s ease; pointer-events: none; box-shadow: 0 10px 30px rgba(16, 40, 72, 0.32); }
+      .aim-toast.show { opacity: 1; transform: translateY(0); }
+      .aim-toast b { display: block; color: #8cc7ff; font-size: 13px; margin-bottom: 4px; }
+      .aim-toast code { color: rgba(255,255,255,0.82); font-family: var(--font); font-size: 11px; white-space: normal; }
+      body.aim-active { cursor: crosshair; }
+
+      .scene {
+        width: 1920px;
+        height: 1080px;
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 72px 104px 70px;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, rgba(0,111,214,0.10) 0 18px, transparent 18px),
+          linear-gradient(rgba(0,111,214,0.034) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,111,214,0.03) 1px, transparent 1px),
+          var(--bg);
+        background-size: auto, 120px 120px, 120px 120px, auto;
+      }
+
+      .scene::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 16px;
+        background: linear-gradient(90deg, var(--brand), var(--sky) 52%, transparent 52%);
+        pointer-events: none;
+      }
+
+      .scene::after {
+        content: "";
+        position: absolute;
+        inset: 32px 38px;
+        pointer-events: none;
+        border: 1px solid rgba(0, 77, 153, 0.14);
+        border-radius: 10px;
+      }
+
+      .topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--quiet);
+        font: 500 23px/1.4 var(--font);
+        margin-bottom: 44px;
+        padding-bottom: 18px;
+        border-bottom: 2px solid rgba(0,111,214,0.14);
+      }
+
+      .mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        color: var(--secondary);
+      }
+
+      .mark::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 6px rgba(0,111,214,0.10);
+      }
+
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        min-height: 42px;
+        padding: 0 16px;
+        color: var(--accent-hover);
+        background: rgba(0,111,214,0.08);
+        border-left: 14px solid var(--brand);
+        font: 600 23px/1.45 var(--font);
+        margin-bottom: 22px;
+      }
+
+      h1, h2, h3, p, li, span {
+        margin: 0;
+        word-break: keep-all;
+        overflow-wrap: normal;
+        line-break: strict;
+        hyphens: none;
+      }
+
+      .hero-title {
+        max-width: 1380px;
+        font-size: 96px;
+        line-height: 1.08;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+
+      .slide-title {
+        max-width: 1410px;
+        font-size: 76px;
+        line-height: 1.12;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+
+      .subtitle {
+        max-width: 1120px;
+        margin-top: 26px;
+        color: var(--muted);
+        font-size: 34px;
+        line-height: 1.55;
+        font-weight: 400;
+      }
+
+      .accent { color: var(--accent-hover); }
+      .green { color: var(--green); }
+
+      .content {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .panel {
+        background: linear-gradient(180deg, rgba(247,251,255,0.98), rgba(238,246,255,0.96));
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-shadow: inset 0 0 18px rgba(0,111,214,0.035);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 48px;
+      }
+
+      .stat-card {
+        min-height: 236px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-top: 6px solid var(--brand);
+      }
+
+      .stat-label {
+        color: var(--muted);
+        font-size: 25px;
+        line-height: 1.45;
+        font-weight: 500;
+      }
+
+      .stat-number {
+        color: var(--text);
+        font: 700 100px/0.94 var(--font);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .stat-number.small {
+        font-size: 78px;
+      }
+
+      .stat-caption {
+        color: var(--quiet);
+        font: 500 20px/1.45 var(--mono);
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 30px;
+        margin-top: 52px;
+        align-items: stretch;
+      }
+
+      .bullets {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 18px;
+      }
+
+      .bullets li {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 16px;
+        color: var(--secondary);
+        font-size: 33px;
+        line-height: 1.42;
+      }
+
+      .bullets li::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-top: 17px;
+        background: var(--accent);
+        box-shadow: 0 0 0 6px rgba(0,111,214,0.10);
+      }
+
+      .evidence {
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+
+      .evidence-row {
+        display: grid;
+        grid-template-columns: 156px 1fr;
+        gap: 20px;
+        align-items: start;
+        color: var(--secondary);
+        font-size: 29px;
+        line-height: 1.45;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        min-height: 36px;
+        padding: 0 12px;
+        border-radius: 9999px;
+        border: 1px solid rgba(0,77,153,0.18);
+        color: var(--secondary);
+        background: rgba(0,111,214,0.035);
+        font: 500 20px/1.2 var(--mono);
+      }
+
+      .agenda {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+        margin-top: 62px;
+        position: relative;
+      }
+
+      .agenda::before {
+        content: "";
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        top: 62px;
+        height: 4px;
+        background: rgba(0,111,214,0.18);
+        z-index: 0;
+      }
+
+      .step-card {
+        min-height: 436px;
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+      }
+
+      .step-no {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background: var(--brand);
+        font: 700 34px/1 var(--font);
+        margin-bottom: 22px;
+      }
+
+      .step-part {
+        color: var(--accent-hover);
+        font-size: 20px;
+        line-height: 1.2;
+        font-weight: 700;
+        margin-bottom: 18px;
+      }
+
+      .step-title {
+        color: var(--text);
+        font-size: 40px;
+        line-height: 1.24;
+        font-weight: 600;
+      }
+
+      .step-text {
+        margin-top: 24px;
+        color: var(--muted);
+        font-size: 28px;
+        line-height: 1.52;
+      }
+
+      .mini-outcome {
+        margin-top: auto;
+        color: var(--secondary);
+        font-size: 24px;
+        line-height: 1.45;
+        padding-top: 22px;
+        border-top: 1px solid var(--border-subtle);
+      }
+
+      .network-panel {
+        padding: 34px;
+        min-height: 504px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 36px;
+      }
+
+      .tunnel-diagram {
+        justify-content: flex-start;
+        gap: 22px;
+      }
+
+      .diagram-label {
+        color: var(--accent-hover);
+        font-size: 22px;
+        line-height: 1.3;
+        font-weight: 700;
+      }
+
+      .center-vpn-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .vpn-box {
+        min-height: 108px;
+        border: 1px solid rgba(0,111,214,0.24);
+        border-radius: 8px;
+        background: rgba(0,111,214,0.055);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: var(--secondary);
+        text-align: center;
+      }
+
+      .vpn-box strong {
+        color: var(--text);
+        font-size: 29px;
+        line-height: 1.2;
+        font-weight: 700;
+      }
+
+      .vpn-box span {
+        color: var(--muted);
+        font-size: 21px;
+        line-height: 1.3;
+      }
+
+      .tunnel-band {
+        position: relative;
+        min-height: 122px;
+        border: 2px dashed rgba(0,111,214,0.40);
+        border-radius: 9999px;
+        background: linear-gradient(90deg, rgba(0,111,214,0.07), rgba(35,168,224,0.12));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-hover);
+        font-size: 31px;
+        line-height: 1.25;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .tunnel-band::before,
+      .tunnel-band::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: 2px;
+        height: 34px;
+        background: rgba(0,111,214,0.42);
+      }
+
+      .tunnel-band::before {
+        top: -35px;
+      }
+
+      .tunnel-band::after {
+        bottom: -35px;
+      }
+
+      .branch-vpn-row {
+        display: grid;
+        grid-template-columns: 1fr 1.05fr;
+        gap: 16px;
+        align-items: stretch;
+      }
+
+      .branch-vpn {
+        min-height: 122px;
+        border-color: rgba(0,111,214,0.50);
+        background: rgba(0,111,214,0.12);
+      }
+
+      .removed-router {
+        min-height: 122px;
+        border: 1px dashed rgba(122,135,152,0.45);
+        border-radius: 8px;
+        background: rgba(122,135,152,0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: var(--quiet);
+        text-align: center;
+        position: relative;
+      }
+
+      .removed-router::before {
+        content: "";
+        position: absolute;
+        left: 22px;
+        right: 22px;
+        top: 50%;
+        height: 2px;
+        background: rgba(206,43,55,0.72);
+        transform: rotate(-10deg);
+      }
+
+      .removed-router strong {
+        font-size: 26px;
+        line-height: 1.2;
+        font-weight: 700;
+      }
+
+      .removed-router span {
+        font-size: 20px;
+        line-height: 1.3;
+      }
+
+      .route-notes {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .route-note {
+        min-height: 58px;
+        border-radius: 6px;
+        background: rgba(0,111,214,0.05);
+        border: 1px solid rgba(0,77,153,0.11);
+        color: var(--muted);
+        font-size: 19px;
+        line-height: 1.35;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        padding: 10px 13px;
+      }
+
+      .network-row {
+        display: grid;
+        grid-template-columns: 1fr 150px 1fr;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .node-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .node {
+        min-height: 68px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(0,111,214,0.035);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--secondary);
+        font-size: 24px;
+        font-weight: 500;
+      }
+
+      .node.primary {
+        border-color: rgba(0,111,214,0.42);
+        background: rgba(0,111,214,0.13);
+        color: var(--text);
+      }
+
+      .arrow {
+        height: 1px;
+        background: linear-gradient(90deg, rgba(0,111,214,0.08), rgba(0,111,214,0.86), rgba(35,168,224,0.18));
+        position: relative;
+      }
+
+      .arrow::after {
+        content: "";
+        position: absolute;
+        right: -3px;
+        top: -5px;
+        width: 10px;
+        height: 10px;
+        border-top: 1px solid rgba(0,111,214,0.86);
+        border-right: 1px solid rgba(0,111,214,0.86);
+        transform: rotate(45deg);
+      }
+
+      .flow-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 60px;
+      }
+
+      .flow-card {
+        min-height: 306px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .flow-label {
+        color: var(--accent-hover);
+        font: 500 21px/1 var(--mono);
+        margin-bottom: 44px;
+      }
+
+      .flow-title {
+        color: var(--text);
+        font-size: 33px;
+        line-height: 1.25;
+        font-weight: 600;
+      }
+
+      .flow-text {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 25px;
+        line-height: 1.48;
+      }
+
+      .quote-wrap {
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      .quote {
+        max-width: 1450px;
+        color: var(--text);
+        font-size: 82px;
+        line-height: 1.22;
+        font-weight: 600;
+      }
+
+      .quote-meta {
+        margin-top: 36px;
+        color: var(--muted);
+        font-size: 30px;
+        line-height: 1.45;
+      }
+
+      .opinion-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 52px;
+      }
+
+      .opinion {
+        padding: 28px;
+        min-height: 188px;
+      }
+
+      .opinion h3 {
+        color: var(--secondary);
+        font-size: 27px;
+        line-height: 1.35;
+        font-weight: 600;
+        margin-bottom: 18px;
+      }
+
+      .opinion p {
+        color: var(--muted);
+        font-size: 25px;
+        line-height: 1.5;
+      }
+
+      .compare-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 56px;
+      }
+
+      .compare-card {
+        min-height: 384px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .compare-title {
+        color: var(--text);
+        font-size: 36px;
+        line-height: 1.25;
+        font-weight: 600;
+      }
+
+      .compare-body {
+        margin-top: 24px;
+        color: var(--muted);
+        font-size: 27px;
+        line-height: 1.5;
+      }
+
+      .compare-proof {
+        margin-top: auto;
+        color: var(--secondary);
+        font-size: 24px;
+        line-height: 1.4;
+        border-top: 1px solid var(--border-subtle);
+        padding-top: 20px;
+      }
+
+      .final-actions {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 46px;
+      }
+
+      .action {
+        padding: 24px;
+        min-height: 150px;
+      }
+
+      .action b {
+        display: block;
+        color: var(--secondary);
+        font-size: 26px;
+        line-height: 1.3;
+        font-weight: 600;
+      }
+
+      .action span {
+        display: block;
+        margin-top: 12px;
+        color: var(--quiet);
+        font-size: 22px;
+        line-height: 1.45;
+      }
+
+      .rule {
+        width: 100%;
+        height: 1px;
+        background: rgba(0,77,153,0.12);
+        margin: 42px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overview-shell">
+      <aside class="strip" aria-label="Slide thumbnails">
+        <div class="strip-title">bank-network-briefing - 9 slides</div>
+        <div class="strip-grid" id="strip-grid">
+          <button class="thumb" type="button" data-jump="1" aria-label="1번 슬라이드 보기">
+            <div class="thumb-stage"><section class="scene" data-slide="1" data-skill="title">
+        <div class="content">
+          <div class="topline"><span class="mark">은행 네트워크 협의체</span></div>
+          <div class="quote-wrap">
+            <div>
+              <div class="kicker">진행상황 보고</div>
+              <h1 class="hero-title">은행 네트워크 협의체 구성(안)</h1>
+              <p class="subtitle">참가기관 반응조사 결과를 바탕으로 실무 수요에 맞춘 은행 네트워크 협의체 운영</p>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">title</span>1<span class="sep">/</span>9</div>
+      </section></div>
+            <span class="thumb-label"><b>01</b><code>title</code></span>
+          </button>
+
+          <button class="thumb" type="button" data-jump="2" aria-label="2번 슬라이드 보기">
+            <div class="thumb-stage"><section class="scene" data-slide="2" data-skill="stat">
+        <div class="content">
+          <div class="topline"><span class="mark">READINESS SIGNAL</span><span>사전 의견취합 기준</span></div>
+          <div class="kicker">01 / 반응조사 결과</div>
+          <h2 class="slide-title">협의체 구성 필요성 확인</h2>
+          <div class="stats-grid">
+            <div class="panel stat-card">
+              <div class="stat-label">의견취합 대상</div>
+              <div class="stat-number">22</div>
+              <div class="stat-caption">개 참가기관</div>
+            </div>
+            <div class="panel stat-card">
+              <div class="stat-label">응답 기관</div>
+              <div class="stat-number">21</div>
+              <div class="stat-caption">미회신 1개 기관</div>
+            </div>
+            <div class="panel stat-card">
+              <div class="stat-label">응답률</div>
+              <div class="stat-number small">95.5%</div>
+              <div class="stat-caption">실무 채널 활성화 확인</div>
+            </div>
+            <div class="panel stat-card">
+              <div class="stat-label">참여 의향</div>
+              <div class="stat-number green">20</div>
+              <div class="stat-caption">찬성 또는 참여 가능</div>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">stat</span>2<span class="sep">/</span>9</div>
+      </section></div>
+            <span class="thumb-label"><b>02</b><code>stat</code></span>
+          </button>
+
+          <button class="thumb" type="button" data-jump="3" aria-label="3번 슬라이드 보기">
+            <div class="thumb-stage"><section class="scene" data-slide="3" data-skill="title-bullets">
+        <div class="content">
+          <div class="topline"><span class="mark">BANK REACTIONS</span><span>우호적이나 실무형 조건 존재</span></div>
+          <div class="kicker">02 / 반응 해석</div>
+          <h2 class="slide-title">참여 긍정 기조 및 운영 조율 과제</h2>
+          <div class="two-col">
+            <ul class="bullets">
+              <li>20개 기관이 참여 의향을 보여 실무 협의체 출범 명분이 이미 형성되었습니다.</li>
+              <li>일부 기관의 우려는 기존 협의체 중복, 인사이동, 일정 부담처럼 운영 설계 영역에 집중되어 있습니다.</li>
+              <li>기술 주제 중심 논의, 사고 사례 공유, 일정 사전 공유 요구가 반복적으로 확인되었습니다.</li>
+            </ul>
+            <div class="panel evidence">
+              <div class="evidence-row"><span class="tag">호응</span><span>은행 담당자들은 네트워크 신기술, 장애 사례, 보안 이슈를 다루는 정기 채널에 실익을 느끼고 있습니다.</span></div>
+              <div class="evidence-row"><span class="tag">조율</span><span>지방 소재 기관은 1박 일정이나 이동 부담을 고려한 일정 설계를 요청했습니다.</span></div>
+              <div class="evidence-row"><span class="tag">관리</span><span>기존 부서장 회의와 중복되지 않도록 실무 기술 중심으로 포지셔닝하면 반대 사유를 흡수할 수 있습니다.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">title-bullets</span>3<span class="sep">/</span>9</div>
+      </section></div>
+            <span class="thumb-label"><b>03</b><code>title-bullets</code></span>
+          </button>
+
+          <button class="thumb" type="button" data-jump="4" aria-label="4번 슬라이드 보기">
+            <div class="thumb-stage"><section class="scene" data-slide="4" data-skill="title-bullets">
+        <div class="content">
+          <div class="topline"><span class="mark">VOICE OF BANKS</span><span>실무 수요</span></div>
+          <div class="kicker">03 / 주요 의견</div>
+          <h2 class="slide-title">실무형 기술 공유 수요 확인</h2>
+          <div class="opinion-grid">
+            <div class="panel opinion">
+              <h3>신기술과 네트워크 이슈 공유</h3>
+              <p>새로운 네트워크 기술, 구성 변화, 최근 보안 이슈를 함께 점검하는 자리를 기대합니다.</p>
+            </div>
+            <div class="panel opinion">
+              <h3>장애 및 운영 사례 논의</h3>
+              <p>참가기관별 장애 경험과 문제 해결 과정을 공유하면 공동망 운영 안정성에 직접 도움이 됩니다.</p>
+            </div>
+            <div class="panel opinion">
+              <h3>기술 주제 중심 인터뷰</h3>
+              <p>형식적 회의보다 담당자가 실제로 다루는 기술 주제를 중심으로 묻고 답하는 방식을 선호합니다.</p>
+            </div>
+            <div class="panel opinion">
+              <h3>일정 사전 공유와 지방기관 배려</h3>
+              <p>사전 일정 확정, 이동시간 고려, 필요 시 1박 일정 검토가 참여 지속성을 높입니다.</p>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">title-bullets</span>4<span class="sep">/</span>9</div>
+      </section></div>
+            <span class="thumb-label"><b>04</b><code>title-bullets</code></span>
+          </button>
+
+          <button class="thumb" type="button" data-jump="5" aria-label="5번 슬라이드 보기">
+            <div class="thumb-stage"><section class="scene" data-slide="5" data-skill="compare">
+        <div class="content">
+          <div class="topline"><span class="mark">OPERATING MODEL</span><span>호응 유지 방식</span></div>
+          <div class="kicker">04 / 의견 반영 구성</div>
+          <h2 class="slide-title">의견 기반 운영 방향 설정</h2>
+          <div class="compare-grid">
+            <div class="panel compare-card">
+              <h3 class="compare-title">반기 1회</h3>
+              <p class="compare-body">응답 기관 다수가 반기 단위 일정을 선호했습니다. 부담을 낮추고 참석률을 안정화합니다.</p>
+              <div class="compare-proof">근거: 반기별 1회 선호 15개 기관</div>
+            </div>
+            <div class="panel compare-card">
+              <h3 class="compare-title">필요 주제는 별도 딥다이브</h3>
+              <p class="compare-body">N2SF, 암호화 전환, 장애 사례처럼 긴급하거나 전문적인 주제는 소규모 심화 세션으로 분리합니다.</p>
+              <div class="compare-proof">효과: 중복 회의 우려 완화</div>
+            </div>
+            <div class="panel compare-card">
+              <h3 class="compare-title">식사 교류로 담당자 채널 확보</h3>
+              <p class="compare-body">공식 설명 이후 비공식 교류를 배치해 기관별 협조 요청의 심리적 장벽을 낮춥니다.</p>
+              <div class="compare-proof">효과: 후속 협의 속도 향상</div>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">compare</span>5<span class="sep">/</span>9</div>
+      </section></div>
+            <span class="thumb-label"><b>05</b><code>compare</code></span>
+          </button>
+
+          <button class="thumb" type="button" data-jump="6" aria-label="6번 슬라이드 보기">
+            <div class="thumb-stage"><section class="scene" data-slide="6" data-skill="steps">
+        <div class="content">
+          <div class="topline"><span class="mark">AGENDA DESIGN</span><span>3부 구성</span></div>
+          <div class="kicker">05 / 간담회 구성</div>
+          <h2 class="slide-title">3부 간담회 구성</h2>
+          <div class="agenda">
+            <div class="panel step-card">
+              <div class="step-no">1</div>
+              <div class="step-part">PART 01</div>
+              <h3 class="step-title">참가기관 데이터 암호화 및 네트워크 구성 고도화</h3>
+              <p class="step-text">은행 담당자에게 추진 방향을 소개하고 기관별 협조 필요사항을 명확히 공유합니다.</p>
+              <div class="mini-outcome">결과: 정책 이해와 후속 협조 채널 확보</div>
+            </div>
+            <div class="panel step-card">
+              <div class="step-no">2</div>
+              <div class="step-part">PART 02</div>
+              <h3 class="step-title">망분리 폐지와 N2SF 보안체계 전환</h3>
+              <p class="step-text">네트워크 인프라 변화와 은행권 보안 운영의 시사점을 실무 관점으로 논의합니다.</p>
+              <div class="mini-outcome">결과: 공통 이슈 발굴과 의제 확장</div>
+            </div>
+            <div class="panel step-card">
+              <div class="step-no">3</div>
+              <div class="step-part">PART 03</div>
+              <h3 class="step-title">저녁식사와 담당자 간 교류</h3>
+              <p class="step-text">기관별 담당자 관계를 만들고, 이후 협조 요청이 가능한 비공식 소통 기반을 확보합니다.</p>
+              <div class="mini-outcome">결과: 신뢰 기반의 상시 네트워크 형성</div>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">steps</span>6<span class="sep">/</span>9</div>
+      </section></div>
+            <span class="thumb-label"><b>06</b><code>steps</code></span>
+          </button>
+
+          <button class="thumb" type="button" data-jump="7" aria-label="7번 슬라이드 보기">
+            <div class="thumb-stage"><section class="scene" data-slide="7" data-skill="split">
+        <div class="content">
+          <div class="topline"><span class="mark">PART 01 BASIS</span><span>요약문 반영</span></div>
+          <div class="kicker">06 / 1부 고도화안</div>
+          <h2 class="slide-title">VPN 터널 방식 전환 협조 요청</h2>
+          <div class="two-col">
+            <div class="panel network-panel tunnel-diagram">
+              <div class="diagram-label">기관라우터 제외 후 터널모드 단순 구조</div>
+              <div class="center-vpn-row">
+                <div class="vpn-box"><strong>강남 센터VPN</strong><span>서비스IP 경로 송신</span></div>
+                <div class="vpn-box"><strong>분당 센터VPN</strong><span>서비스IP 경로 송신</span></div>
+              </div>
+              <div class="tunnel-band">Tunnel Mode<br />센터VPN ↔ 기관VPN</div>
+              <div class="branch-vpn-row">
+                <div class="vpn-box branch-vpn"><strong>기관VPN</strong><span>서비스IP 직접 수신<br />NAT 대역 송신</span></div>
+                <div class="removed-router"><strong>기관라우터</strong><span>고도화 구성에서 제외</span></div>
+              </div>
+              <div class="route-notes">
+                <div class="route-note">VPN Peer IP는 회선 경로로만 처리</div>
+                <div class="route-note">QoS와 부하분산은 VPN 기준 점검</div>
+              </div>
+            </div>
+            <ul class="bullets">
+              <li>기관라우터를 경유하지 않는 기관VPN 단독 구조로 단순화합니다.</li>
+              <li>우리원 서비스IP는 VPN 터널로 기관VPN이 직접 수신하고, 기관 NAT 대역은 센터VPN으로 송신합니다.</li>
+              <li>전용회선 부하분산과 QoS는 VPN 장비 기준으로 사전 점검합니다.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">split</span>7<span class="sep">/</span>9</div>
+      </section></div>
+            <span class="thumb-label"><b>07</b><code>split</code></span>
+          </button>
+
+          <button class="thumb" type="button" data-jump="8" aria-label="8번 슬라이드 보기">
+            <div class="thumb-stage"><section class="scene" data-slide="8" data-skill="evolution-flow">
+        <div class="content">
+          <div class="topline"><span class="mark">PART 02 BASIS</span><span>보안체계 전환 논의</span></div>
+          <div class="kicker">08 / 2부 N2SF</div>
+          <h2 class="slide-title">N2SF 전환 시사점 공유</h2>
+          <div class="flow-grid">
+            <div class="panel flow-card">
+              <div class="flow-label">FROM</div>
+              <h3 class="flow-title">물리 분리와 경계 중심 통제</h3>
+              <p class="flow-text">접속 위치와 망 구분에 의존해 위험을 낮추던 방식입니다.</p>
+            </div>
+            <div class="panel flow-card">
+              <div class="flow-label">SHIFT</div>
+              <h3 class="flow-title">업무 단위 접근과 실시간 검증</h3>
+              <p class="flow-text">사용자, 단말, 앱, 데이터 흐름을 맥락별로 확인해야 합니다.</p>
+            </div>
+            <div class="panel flow-card">
+              <div class="flow-label">NETWORK</div>
+              <h3 class="flow-title">암호화 경로와 세분화된 구간</h3>
+              <p class="flow-text">네트워크는 단순 연결망이 아니라 정책 적용 지점이 됩니다.</p>
+            </div>
+            <div class="panel flow-card">
+              <div class="flow-label">ACTION</div>
+              <h3 class="flow-title">관측성과 장애 대응 프로세스</h3>
+              <p class="flow-text">접속 정책 변화가 장애로 번지지 않도록 운영 지표를 공유합니다.</p>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">evolution-flow</span>8<span class="sep">/</span>9</div>
+      </section></div>
+            <span class="thumb-label"><b>08</b><code>evolution-flow</code></span>
+          </button>
+
+          <button class="thumb" type="button" data-jump="9" aria-label="9번 슬라이드 보기">
+            <div class="thumb-stage"><section class="scene" data-slide="9" data-skill="quote">
+        <div class="content">
+          <div class="topline"><span class="mark">EXECUTIVE SUMMARY</span><span>후속 실행 준비</span></div>
+          <div class="quote-wrap">
+            <div>
+              <div class="kicker">08 / 결론</div>
+              <p class="quote">실무자 의견이 반영된 실무형 간담회로 준비</p>
+              <p class="quote-meta">다음 단계는 초청 문안 확정, 기관별 참석자 확인, 1부 협조 요청사항 정리, 2부 N2SF 관련 강연자 섭외입니다.</p>
+              <div class="final-actions">
+                <div class="panel action"><b>초청 확정</b><span>취지와 기대효과를 선명하게 전달</span></div>
+                <div class="panel action"><b>질문 배포</b><span>기술 논의를 미리 준비하도록 안내</span></div>
+                <div class="panel action"><b>기관별 메모</b><span>우려와 선호 일정을 사전에 반영</span></div>
+                <div class="panel action"><b>교류 운영</b><span>담당자 채널을 지속 협력 기반으로 전환</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">quote</span>9<span class="sep">/</span>9</div>
+      </section></div>
+            <span class="thumb-label"><b>09</b><code>quote</code></span>
+          </button>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="main-header">
+          <div class="main-title">Overview</div>
+          <div class="header-right">
+            <button class="aim-btn" id="aim-btn" type="button">Aim</button>
+            <div class="nav" aria-label="Slide navigation">
+              <button class="nav-btn" id="prev-btn" type="button" aria-label="이전 슬라이드">&#8249;</button>
+              <div class="nav-index"><span class="current" id="current-no">01</span><span>/09</span><span class="skill" id="current-skill">title</span></div>
+              <button class="nav-btn" id="next-btn" type="button" aria-label="다음 슬라이드">&#8250;</button>
+            </div>
+          </div>
+        </header>
+        <section class="detail" aria-label="Slide detail preview">
+          <div class="detail-frame" id="detail-frame">
+            <div class="detail-item active" data-panel="1">
+              <div class="detail-stage"><section class="scene" data-slide="1" data-skill="title">
+        <div class="content">
+          <div class="topline"><span class="mark">은행 네트워크 협의체</span></div>
+          <div class="quote-wrap">
+            <div>
+              <div class="kicker">진행상황 보고</div>
+              <h1 class="hero-title">은행 네트워크 협의체 구성(안)</h1>
+              <p class="subtitle">참가기관 반응조사 결과를 바탕으로 실무 수요에 맞춘 은행 네트워크 협의체 운영</p>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">title</span>1<span class="sep">/</span>9</div>
+      </section></div>
+            </div>
+
+            <div class="detail-item" data-panel="2">
+              <div class="detail-stage"><section class="scene" data-slide="2" data-skill="stat">
+        <div class="content">
+          <div class="topline"><span class="mark">READINESS SIGNAL</span><span>사전 의견취합 기준</span></div>
+          <div class="kicker">01 / 반응조사 결과</div>
+          <h2 class="slide-title">협의체 구성 필요성 확인</h2>
+          <div class="stats-grid">
+            <div class="panel stat-card">
+              <div class="stat-label">의견취합 대상</div>
+              <div class="stat-number">22</div>
+              <div class="stat-caption">개 참가기관</div>
+            </div>
+            <div class="panel stat-card">
+              <div class="stat-label">응답 기관</div>
+              <div class="stat-number">21</div>
+              <div class="stat-caption">미회신 1개 기관</div>
+            </div>
+            <div class="panel stat-card">
+              <div class="stat-label">응답률</div>
+              <div class="stat-number small">95.5%</div>
+              <div class="stat-caption">실무 채널 활성화 확인</div>
+            </div>
+            <div class="panel stat-card">
+              <div class="stat-label">참여 의향</div>
+              <div class="stat-number green">20</div>
+              <div class="stat-caption">찬성 또는 참여 가능</div>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">stat</span>2<span class="sep">/</span>9</div>
+      </section></div>
+            </div>
+
+            <div class="detail-item" data-panel="3">
+              <div class="detail-stage"><section class="scene" data-slide="3" data-skill="title-bullets">
+        <div class="content">
+          <div class="topline"><span class="mark">BANK REACTIONS</span><span>우호적이나 실무형 조건 존재</span></div>
+          <div class="kicker">02 / 반응 해석</div>
+          <h2 class="slide-title">참여 긍정 기조 및 운영 조율 과제</h2>
+          <div class="two-col">
+            <ul class="bullets">
+              <li>20개 기관이 참여 의향을 보여 실무 협의체 출범 명분이 이미 형성되었습니다.</li>
+              <li>일부 기관의 우려는 기존 협의체 중복, 인사이동, 일정 부담처럼 운영 설계 영역에 집중되어 있습니다.</li>
+              <li>기술 주제 중심 논의, 사고 사례 공유, 일정 사전 공유 요구가 반복적으로 확인되었습니다.</li>
+            </ul>
+            <div class="panel evidence">
+              <div class="evidence-row"><span class="tag">호응</span><span>은행 담당자들은 네트워크 신기술, 장애 사례, 보안 이슈를 다루는 정기 채널에 실익을 느끼고 있습니다.</span></div>
+              <div class="evidence-row"><span class="tag">조율</span><span>지방 소재 기관은 1박 일정이나 이동 부담을 고려한 일정 설계를 요청했습니다.</span></div>
+              <div class="evidence-row"><span class="tag">관리</span><span>기존 부서장 회의와 중복되지 않도록 실무 기술 중심으로 포지셔닝하면 반대 사유를 흡수할 수 있습니다.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">title-bullets</span>3<span class="sep">/</span>9</div>
+      </section></div>
+            </div>
+
+            <div class="detail-item" data-panel="4">
+              <div class="detail-stage"><section class="scene" data-slide="4" data-skill="title-bullets">
+        <div class="content">
+          <div class="topline"><span class="mark">VOICE OF BANKS</span><span>실무 수요</span></div>
+          <div class="kicker">03 / 주요 의견</div>
+          <h2 class="slide-title">실무형 기술 공유 수요 확인</h2>
+          <div class="opinion-grid">
+            <div class="panel opinion">
+              <h3>신기술과 네트워크 이슈 공유</h3>
+              <p>새로운 네트워크 기술, 구성 변화, 최근 보안 이슈를 함께 점검하는 자리를 기대합니다.</p>
+            </div>
+            <div class="panel opinion">
+              <h3>장애 및 운영 사례 논의</h3>
+              <p>참가기관별 장애 경험과 문제 해결 과정을 공유하면 공동망 운영 안정성에 직접 도움이 됩니다.</p>
+            </div>
+            <div class="panel opinion">
+              <h3>기술 주제 중심 인터뷰</h3>
+              <p>형식적 회의보다 담당자가 실제로 다루는 기술 주제를 중심으로 묻고 답하는 방식을 선호합니다.</p>
+            </div>
+            <div class="panel opinion">
+              <h3>일정 사전 공유와 지방기관 배려</h3>
+              <p>사전 일정 확정, 이동시간 고려, 필요 시 1박 일정 검토가 참여 지속성을 높입니다.</p>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">title-bullets</span>4<span class="sep">/</span>9</div>
+      </section></div>
+            </div>
+
+            <div class="detail-item" data-panel="5">
+              <div class="detail-stage"><section class="scene" data-slide="5" data-skill="compare">
+        <div class="content">
+          <div class="topline"><span class="mark">OPERATING MODEL</span><span>호응 유지 방식</span></div>
+          <div class="kicker">04 / 의견 반영 구성</div>
+          <h2 class="slide-title">의견 기반 운영 방향 설정</h2>
+          <div class="compare-grid">
+            <div class="panel compare-card">
+              <h3 class="compare-title">반기 1회</h3>
+              <p class="compare-body">응답 기관 다수가 반기 단위 일정을 선호했습니다. 부담을 낮추고 참석률을 안정화합니다.</p>
+              <div class="compare-proof">근거: 반기별 1회 선호 15개 기관</div>
+            </div>
+            <div class="panel compare-card">
+              <h3 class="compare-title">필요 주제는 별도 딥다이브</h3>
+              <p class="compare-body">N2SF, 암호화 전환, 장애 사례처럼 긴급하거나 전문적인 주제는 소규모 심화 세션으로 분리합니다.</p>
+              <div class="compare-proof">효과: 중복 회의 우려 완화</div>
+            </div>
+            <div class="panel compare-card">
+              <h3 class="compare-title">식사 교류로 담당자 채널 확보</h3>
+              <p class="compare-body">공식 설명 이후 비공식 교류를 배치해 기관별 협조 요청의 심리적 장벽을 낮춥니다.</p>
+              <div class="compare-proof">효과: 후속 협의 속도 향상</div>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">compare</span>5<span class="sep">/</span>9</div>
+      </section></div>
+            </div>
+
+            <div class="detail-item" data-panel="6">
+              <div class="detail-stage"><section class="scene" data-slide="6" data-skill="steps">
+        <div class="content">
+          <div class="topline"><span class="mark">AGENDA DESIGN</span><span>3부 구성</span></div>
+          <div class="kicker">05 / 간담회 구성</div>
+          <h2 class="slide-title">3부 간담회 구성</h2>
+          <div class="agenda">
+            <div class="panel step-card">
+              <div class="step-no">1</div>
+              <div class="step-part">PART 01</div>
+              <h3 class="step-title">참가기관 데이터 암호화 및 네트워크 구성 고도화</h3>
+              <p class="step-text">은행 담당자에게 추진 방향을 소개하고 기관별 협조 필요사항을 명확히 공유합니다.</p>
+              <div class="mini-outcome">결과: 정책 이해와 후속 협조 채널 확보</div>
+            </div>
+            <div class="panel step-card">
+              <div class="step-no">2</div>
+              <div class="step-part">PART 02</div>
+              <h3 class="step-title">망분리 폐지와 N2SF 보안체계 전환</h3>
+              <p class="step-text">네트워크 인프라 변화와 은행권 보안 운영의 시사점을 실무 관점으로 논의합니다.</p>
+              <div class="mini-outcome">결과: 공통 이슈 발굴과 의제 확장</div>
+            </div>
+            <div class="panel step-card">
+              <div class="step-no">3</div>
+              <div class="step-part">PART 03</div>
+              <h3 class="step-title">저녁식사와 담당자 간 교류</h3>
+              <p class="step-text">기관별 담당자 관계를 만들고, 이후 협조 요청이 가능한 비공식 소통 기반을 확보합니다.</p>
+              <div class="mini-outcome">결과: 신뢰 기반의 상시 네트워크 형성</div>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">steps</span>6<span class="sep">/</span>9</div>
+      </section></div>
+            </div>
+
+            <div class="detail-item" data-panel="7">
+              <div class="detail-stage"><section class="scene" data-slide="7" data-skill="split">
+        <div class="content">
+          <div class="topline"><span class="mark">PART 01 BASIS</span><span>요약문 반영</span></div>
+          <div class="kicker">06 / 1부 고도화안</div>
+          <h2 class="slide-title">VPN 터널 방식 전환 협조 요청</h2>
+          <div class="two-col">
+            <div class="panel network-panel tunnel-diagram">
+              <div class="diagram-label">기관라우터 제외 후 터널모드 단순 구조</div>
+              <div class="center-vpn-row">
+                <div class="vpn-box"><strong>강남 센터VPN</strong><span>서비스IP 경로 송신</span></div>
+                <div class="vpn-box"><strong>분당 센터VPN</strong><span>서비스IP 경로 송신</span></div>
+              </div>
+              <div class="tunnel-band">Tunnel Mode<br />센터VPN ↔ 기관VPN</div>
+              <div class="branch-vpn-row">
+                <div class="vpn-box branch-vpn"><strong>기관VPN</strong><span>서비스IP 직접 수신<br />NAT 대역 송신</span></div>
+                <div class="removed-router"><strong>기관라우터</strong><span>고도화 구성에서 제외</span></div>
+              </div>
+              <div class="route-notes">
+                <div class="route-note">VPN Peer IP는 회선 경로로만 처리</div>
+                <div class="route-note">QoS와 부하분산은 VPN 기준 점검</div>
+              </div>
+            </div>
+            <ul class="bullets">
+              <li>기관라우터를 경유하지 않는 기관VPN 단독 구조로 단순화합니다.</li>
+              <li>우리원 서비스IP는 VPN 터널로 기관VPN이 직접 수신하고, 기관 NAT 대역은 센터VPN으로 송신합니다.</li>
+              <li>전용회선 부하분산과 QoS는 VPN 장비 기준으로 사전 점검합니다.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">split</span>7<span class="sep">/</span>9</div>
+      </section></div>
+            </div>
+
+            <div class="detail-item" data-panel="8">
+              <div class="detail-stage"><section class="scene" data-slide="8" data-skill="evolution-flow">
+        <div class="content">
+          <div class="topline"><span class="mark">PART 02 BASIS</span><span>보안체계 전환 논의</span></div>
+          <div class="kicker">08 / 2부 N2SF</div>
+          <h2 class="slide-title">N2SF 전환 시사점 공유</h2>
+          <div class="flow-grid">
+            <div class="panel flow-card">
+              <div class="flow-label">FROM</div>
+              <h3 class="flow-title">물리 분리와 경계 중심 통제</h3>
+              <p class="flow-text">접속 위치와 망 구분에 의존해 위험을 낮추던 방식입니다.</p>
+            </div>
+            <div class="panel flow-card">
+              <div class="flow-label">SHIFT</div>
+              <h3 class="flow-title">업무 단위 접근과 실시간 검증</h3>
+              <p class="flow-text">사용자, 단말, 앱, 데이터 흐름을 맥락별로 확인해야 합니다.</p>
+            </div>
+            <div class="panel flow-card">
+              <div class="flow-label">NETWORK</div>
+              <h3 class="flow-title">암호화 경로와 세분화된 구간</h3>
+              <p class="flow-text">네트워크는 단순 연결망이 아니라 정책 적용 지점이 됩니다.</p>
+            </div>
+            <div class="panel flow-card">
+              <div class="flow-label">ACTION</div>
+              <h3 class="flow-title">관측성과 장애 대응 프로세스</h3>
+              <p class="flow-text">접속 정책 변화가 장애로 번지지 않도록 운영 지표를 공유합니다.</p>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">evolution-flow</span>8<span class="sep">/</span>9</div>
+      </section></div>
+            </div>
+
+            <div class="detail-item" data-panel="9">
+              <div class="detail-stage"><section class="scene" data-slide="9" data-skill="quote">
+        <div class="content">
+          <div class="topline"><span class="mark">EXECUTIVE SUMMARY</span><span>후속 실행 준비</span></div>
+          <div class="quote-wrap">
+            <div>
+              <div class="kicker">08 / 결론</div>
+              <p class="quote">실무자 의견이 반영된 실무형 간담회로 준비</p>
+              <p class="quote-meta">다음 단계는 초청 문안 확정, 기관별 참석자 확인, 1부 협조 요청사항 정리, 2부 N2SF 관련 강연자 섭외입니다.</p>
+              <div class="final-actions">
+                <div class="panel action"><b>초청 확정</b><span>취지와 기대효과를 선명하게 전달</span></div>
+                <div class="panel action"><b>질문 배포</b><span>기술 논의를 미리 준비하도록 안내</span></div>
+                <div class="panel action"><b>기관별 메모</b><span>우려와 선호 일정을 사전에 반영</span></div>
+                <div class="panel action"><b>교류 운영</b><span>담당자 채널을 지속 협력 기반으로 전환</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="brand"><img class="brand-dot" src="assets/kftc-logo-blue.png" alt="금융결제원 CI" /><span class="brand-text">IT운영부 네트워크팀</span></div>
+        <div class="slide-num"><span class="skill">quote</span>9<span class="sep">/</span>9</div>
+      </section></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+      (function () {
+        const panels = Array.from(document.querySelectorAll('.detail-item'));
+        const thumbs = Array.from(document.querySelectorAll('.thumb'));
+        const prev = document.getElementById('prev-btn');
+        const next = document.getElementById('next-btn');
+        const currentNo = document.getElementById('current-no');
+        const currentSkill = document.getElementById('current-skill');
+        const aimBtn = document.getElementById('aim-btn');
+        let active = 1;
+        let aim = false;
+        function setActive(n) {
+          active = Math.max(1, Math.min(panels.length, n));
+          panels.forEach((panel) => panel.classList.toggle('active', Number(panel.dataset.panel) === active));
+          thumbs.forEach((thumb) => thumb.classList.toggle('active', Number(thumb.dataset.jump) === active));
+          const scene = panels[active - 1].querySelector('.scene');
+          currentNo.textContent = String(active).padStart(2, '0');
+          currentSkill.textContent = scene.dataset.skill;
+          prev.disabled = active === 1;
+          next.disabled = active === panels.length;
+          thumbs[active - 1].scrollIntoView({ block: 'nearest' });
+        }
+        prev.addEventListener('click', () => setActive(active - 1));
+        next.addEventListener('click', () => setActive(active + 1));
+        thumbs.forEach((thumb) => thumb.addEventListener('click', () => setActive(Number(thumb.dataset.jump))));
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') { setActive(active - 1); event.preventDefault(); }
+          if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === ' ') { setActive(active + 1); event.preventDefault(); }
+          if (/^[1-9]$/.test(event.key)) setActive(Number(event.key));
+          if (event.key === 'Escape' && aim) setAim(false);
+        });
+        const overlay = document.createElement('div');
+        overlay.className = 'aim-overlay';
+        document.body.appendChild(overlay);
+        const tooltip = document.createElement('div');
+        tooltip.className = 'aim-tooltip';
+        document.body.appendChild(tooltip);
+        const toast = document.createElement('div');
+        toast.className = 'aim-toast';
+        document.body.appendChild(toast);
+        let toastTimer = null;
+        function activeScene() { return panels[active - 1].querySelector('.scene'); }
+        function setAim(nextAim) {
+          aim = nextAim;
+          document.body.classList.toggle('aim-active', aim);
+          aimBtn.classList.toggle('active', aim);
+          if (!aim) hideAim();
+        }
+        function hideAim() { overlay.style.display = 'none'; tooltip.style.display = 'none'; }
+        function selectorFor(el) {
+          const parts = [];
+          let cur = el;
+          while (cur && cur.nodeType === 1) {
+            if (cur.classList.contains('scene') && cur.dataset.slide) { parts.unshift('[data-slide="' + cur.dataset.slide + '"]'); break; }
+            let part = cur.tagName.toLowerCase();
+            const classes = Array.from(cur.classList).filter((name) => !name.startsWith('aim-') && name !== 'active');
+            if (classes.length) part += '.' + classes.join('.');
+            const parent = cur.parentElement;
+            if (parent) {
+              const twins = Array.from(parent.children).filter((child) => child.tagName === cur.tagName && child.className === cur.className);
+              if (twins.length > 1) part += ':nth-of-type(' + (twins.indexOf(cur) + 1) + ')';
+            }
+            parts.unshift(part);
+            cur = parent;
+          }
+          return parts.join(' > ');
+        }
+        function showAim(el) {
+          const rect = el.getBoundingClientRect();
+          overlay.style.display = 'block';
+          overlay.style.left = rect.left + 'px';
+          overlay.style.top = rect.top + 'px';
+          overlay.style.width = rect.width + 'px';
+          overlay.style.height = rect.height + 'px';
+          const sel = selectorFor(el);
+          tooltip.textContent = sel;
+          tooltip.style.display = 'block';
+          tooltip.style.top = Math.min(window.innerHeight - 34, rect.bottom + 6) + 'px';
+          tooltip.style.left = Math.min(window.innerWidth - 580, Math.max(8, rect.left)) + 'px';
+        }
+        function copy(text) {
+          if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          return Promise.resolve();
+        }
+        function showToast(sel) {
+          toast.innerHTML = '<b>복사되었습니다</b><code>' + sel.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</code>';
+          toast.classList.add('show');
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+        aimBtn.addEventListener('click', () => setAim(!aim));
+        document.addEventListener('mousemove', (event) => {
+          if (!aim) return;
+          const el = document.elementFromPoint(event.clientX, event.clientY);
+          const scene = activeScene();
+          if (!el || !scene.contains(el)) { hideAim(); return; }
+          showAim(el);
+        });
+        document.addEventListener('click', (event) => {
+          if (!aim) return;
+          const el = document.elementFromPoint(event.clientX, event.clientY);
+          const scene = activeScene();
+          if (!el || !scene.contains(el)) return;
+          event.preventDefault();
+          event.stopPropagation();
+          const sel = selectorFor(el);
+          copy(sel).then(() => showToast(sel));
+          setAim(false);
+        }, true);
+        setActive(1);
+      }());
+    </script>
+  </body>
+</html>

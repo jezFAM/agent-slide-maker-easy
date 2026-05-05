@@ -1,6 +1,14 @@
 # OS
 .DS_Store
 
+# Dependencies
+node_modules/
+
+# Local server logs
+preview.log
+preview.err.log
+overview-server.log
+
 # Rendered outputs
 renders/
 **/renders/
@@ -18,3 +26,5 @@ _archive/
 topics/*
 !topics/hangul-600/
 !topics/_template/
+!topics/bank-network-briefing/
+!topics/bank-network-briefing/**

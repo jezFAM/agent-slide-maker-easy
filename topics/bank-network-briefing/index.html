@@ -1,0 +1,991 @@
+﻿<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css" type="text/css" />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --panel: #f7fbff;
+        --surface: #eef6ff;
+        --surface-2: #e6f0fb;
+        --text: #101828;
+        --secondary: #26384f;
+        --muted: #5b6b80;
+        --quiet: #7a8798;
+        --brand: #006fd6;
+        --accent: #0072ce;
+        --accent-hover: #003b71;
+        --sky: #23a8e0;
+        --green: #0f8f63;
+        --border: rgba(0, 77, 153, 0.16);
+        --border-subtle: rgba(0, 77, 153, 0.10);
+        --font: "Paperlogy", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        --mono: "Paperlogy", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        margin: 0;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+        letter-spacing: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      [data-composition-id] {
+        width: 1920px;
+        height: 1080px;
+        position: relative;
+        overflow: hidden;
+        background: var(--bg);
+      }
+
+      .scene {
+        width: 1920px;
+        height: 1080px;
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 72px 104px 70px;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, rgba(0,111,214,0.10) 0 18px, transparent 18px),
+          linear-gradient(rgba(0,111,214,0.034) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,111,214,0.03) 1px, transparent 1px),
+          var(--bg);
+        background-size: auto, 120px 120px, 120px 120px, auto;
+      }
+
+      .scene::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 16px;
+        background: linear-gradient(90deg, var(--brand), var(--sky) 52%, transparent 52%);
+        pointer-events: none;
+      }
+
+      .scene::after {
+        content: "";
+        position: absolute;
+        inset: 32px 38px;
+        pointer-events: none;
+        border: 1px solid rgba(0, 77, 153, 0.14);
+        border-radius: 10px;
+      }
+
+      .topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--quiet);
+        font: 500 23px/1.4 var(--font);
+        margin-bottom: 44px;
+        padding-bottom: 18px;
+        border-bottom: 2px solid rgba(0,111,214,0.14);
+      }
+
+      .mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        color: var(--secondary);
+      }
+
+      .mark::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 6px rgba(0,111,214,0.10);
+      }
+
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        min-height: 42px;
+        padding: 0 16px;
+        color: var(--accent-hover);
+        background: rgba(0,111,214,0.08);
+        border-left: 14px solid var(--brand);
+        font: 600 23px/1.45 var(--font);
+        margin-bottom: 22px;
+      }
+
+      h1, h2, h3, p, li, span {
+        margin: 0;
+        word-break: keep-all;
+        overflow-wrap: normal;
+        line-break: strict;
+        hyphens: none;
+      }
+
+      .hero-title {
+        max-width: 1380px;
+        font-size: 96px;
+        line-height: 1.08;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+
+      .slide-title {
+        max-width: 1410px;
+        font-size: 76px;
+        line-height: 1.12;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+
+      .subtitle {
+        max-width: 1120px;
+        margin-top: 26px;
+        color: var(--muted);
+        font-size: 34px;
+        line-height: 1.55;
+        font-weight: 400;
+      }
+
+      .accent { color: var(--accent-hover); }
+      .green { color: var(--green); }
+
+      .content {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .panel {
+        background: linear-gradient(180deg, rgba(247,251,255,0.98), rgba(238,246,255,0.96));
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-shadow: inset 0 0 18px rgba(0,111,214,0.035);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 48px;
+      }
+
+      .stat-card {
+        min-height: 236px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-top: 6px solid var(--brand);
+      }
+
+      .stat-label {
+        color: var(--muted);
+        font-size: 25px;
+        line-height: 1.45;
+        font-weight: 500;
+      }
+
+      .stat-number {
+        color: var(--text);
+        font: 700 100px/0.94 var(--font);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .stat-number.small {
+        font-size: 78px;
+      }
+
+      .stat-caption {
+        color: var(--quiet);
+        font: 500 20px/1.45 var(--mono);
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 30px;
+        margin-top: 52px;
+        align-items: stretch;
+      }
+
+      .bullets {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 18px;
+      }
+
+      .bullets li {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 16px;
+        color: var(--secondary);
+        font-size: 33px;
+        line-height: 1.42;
+      }
+
+      .bullets li::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-top: 17px;
+        background: var(--accent);
+        box-shadow: 0 0 0 6px rgba(0,111,214,0.10);
+      }
+
+      .evidence {
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+
+      .evidence-row {
+        display: grid;
+        grid-template-columns: 156px 1fr;
+        gap: 20px;
+        align-items: start;
+        color: var(--secondary);
+        font-size: 29px;
+        line-height: 1.45;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        min-height: 36px;
+        padding: 0 12px;
+        border-radius: 9999px;
+        border: 1px solid rgba(0,77,153,0.18);
+        color: var(--secondary);
+        background: rgba(0,111,214,0.035);
+        font: 500 20px/1.2 var(--mono);
+      }
+
+      .agenda {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+        margin-top: 62px;
+        position: relative;
+      }
+
+      .agenda::before {
+        content: "";
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        top: 62px;
+        height: 4px;
+        background: rgba(0,111,214,0.18);
+        z-index: 0;
+      }
+
+      .step-card {
+        min-height: 436px;
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+      }
+
+      .step-no {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background: var(--brand);
+        font: 700 34px/1 var(--font);
+        margin-bottom: 22px;
+      }
+
+      .step-part {
+        color: var(--accent-hover);
+        font-size: 20px;
+        line-height: 1.2;
+        font-weight: 700;
+        margin-bottom: 18px;
+      }
+
+      .step-title {
+        color: var(--text);
+        font-size: 40px;
+        line-height: 1.24;
+        font-weight: 600;
+      }
+
+      .step-text {
+        margin-top: 24px;
+        color: var(--muted);
+        font-size: 28px;
+        line-height: 1.52;
+      }
+
+      .mini-outcome {
+        margin-top: auto;
+        color: var(--secondary);
+        font-size: 24px;
+        line-height: 1.45;
+        padding-top: 22px;
+        border-top: 1px solid var(--border-subtle);
+      }
+
+      .network-panel {
+        padding: 34px;
+        min-height: 504px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 36px;
+      }
+
+      .tunnel-diagram {
+        justify-content: flex-start;
+        gap: 22px;
+      }
+
+      .diagram-label {
+        color: var(--accent-hover);
+        font-size: 22px;
+        line-height: 1.3;
+        font-weight: 700;
+      }
+
+      .center-vpn-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .vpn-box {
+        min-height: 108px;
+        border: 1px solid rgba(0,111,214,0.24);
+        border-radius: 8px;
+        background: rgba(0,111,214,0.055);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: var(--secondary);
+        text-align: center;
+      }
+
+      .vpn-box strong {
+        color: var(--text);
+        font-size: 29px;
+        line-height: 1.2;
+        font-weight: 700;
+      }
+
+      .vpn-box span {
+        color: var(--muted);
+        font-size: 21px;
+        line-height: 1.3;
+      }
+
+      .tunnel-band {
+        position: relative;
+        min-height: 122px;
+        border: 2px dashed rgba(0,111,214,0.40);
+        border-radius: 9999px;
+        background: linear-gradient(90deg, rgba(0,111,214,0.07), rgba(35,168,224,0.12));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-hover);
+        font-size: 31px;
+        line-height: 1.25;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .tunnel-band::before,
+      .tunnel-band::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: 2px;
+        height: 34px;
+        background: rgba(0,111,214,0.42);
+      }
+
+      .tunnel-band::before {
+        top: -35px;
+      }
+
+      .tunnel-band::after {
+        bottom: -35px;
+      }
+
+      .branch-vpn-row {
+        display: grid;
+        grid-template-columns: 1fr 1.05fr;
+        gap: 16px;
+        align-items: stretch;
+      }
+
+      .branch-vpn {
+        min-height: 122px;
+        border-color: rgba(0,111,214,0.50);
+        background: rgba(0,111,214,0.12);
+      }
+
+      .removed-router {
+        min-height: 122px;
+        border: 1px dashed rgba(122,135,152,0.45);
+        border-radius: 8px;
+        background: rgba(122,135,152,0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: var(--quiet);
+        text-align: center;
+        position: relative;
+      }
+
+      .removed-router::before {
+        content: "";
+        position: absolute;
+        left: 22px;
+        right: 22px;
+        top: 50%;
+        height: 2px;
+        background: rgba(206,43,55,0.72);
+        transform: rotate(-10deg);
+      }
+
+      .removed-router strong {
+        font-size: 26px;
+        line-height: 1.2;
+        font-weight: 700;
+      }
+
+      .removed-router span {
+        font-size: 20px;
+        line-height: 1.3;
+      }
+
+      .route-notes {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .route-note {
+        min-height: 58px;
+        border-radius: 6px;
+        background: rgba(0,111,214,0.05);
+        border: 1px solid rgba(0,77,153,0.11);
+        color: var(--muted);
+        font-size: 19px;
+        line-height: 1.35;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        padding: 10px 13px;
+      }
+
+      .network-row {
+        display: grid;
+        grid-template-columns: 1fr 150px 1fr;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .node-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .node {
+        min-height: 68px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(0,111,214,0.035);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--secondary);
+        font-size: 24px;
+        font-weight: 500;
+      }
+
+      .node.primary {
+        border-color: rgba(0,111,214,0.42);
+        background: rgba(0,111,214,0.13);
+        color: var(--text);
+      }
+
+      .arrow {
+        height: 1px;
+        background: linear-gradient(90deg, rgba(0,111,214,0.08), rgba(0,111,214,0.86), rgba(35,168,224,0.18));
+        position: relative;
+      }
+
+      .arrow::after {
+        content: "";
+        position: absolute;
+        right: -3px;
+        top: -5px;
+        width: 10px;
+        height: 10px;
+        border-top: 1px solid rgba(0,111,214,0.86);
+        border-right: 1px solid rgba(0,111,214,0.86);
+        transform: rotate(45deg);
+      }
+
+      .flow-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 60px;
+      }
+
+      .flow-card {
+        min-height: 306px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .flow-label {
+        color: var(--accent-hover);
+        font: 500 21px/1 var(--mono);
+        margin-bottom: 44px;
+      }
+
+      .flow-title {
+        color: var(--text);
+        font-size: 33px;
+        line-height: 1.25;
+        font-weight: 600;
+      }
+
+      .flow-text {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 25px;
+        line-height: 1.48;
+      }
+
+      .quote-wrap {
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      .quote {
+        max-width: 1450px;
+        color: var(--text);
+        font-size: 82px;
+        line-height: 1.22;
+        font-weight: 600;
+      }
+
+      .quote-meta {
+        margin-top: 36px;
+        color: var(--muted);
+        font-size: 30px;
+        line-height: 1.45;
+      }
+
+      .opinion-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 52px;
+      }
+
+      .opinion {
+        padding: 28px;
+        min-height: 188px;
+      }
+
+      .opinion h3 {
+        color: var(--secondary);
+        font-size: 27px;
+        line-height: 1.35;
+        font-weight: 600;
+        margin-bottom: 18px;
+      }
+
+      .opinion p {
+        color: var(--muted);
+        font-size: 25px;
+        line-height: 1.5;
+      }
+
+      .compare-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 56px;
+      }
+
+      .compare-card {
+        min-height: 384px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .compare-title {
+        color: var(--text);
+        font-size: 36px;
+        line-height: 1.25;
+        font-weight: 600;
+      }
+
+      .compare-body {
+        margin-top: 24px;
+        color: var(--muted);
+        font-size: 27px;
+        line-height: 1.5;
+      }
+
+      .compare-proof {
+        margin-top: auto;
+        color: var(--secondary);
+        font-size: 24px;
+        line-height: 1.4;
+        border-top: 1px solid var(--border-subtle);
+        padding-top: 20px;
+      }
+
+      .final-actions {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 46px;
+      }
+
+      .action {
+        padding: 24px;
+        min-height: 150px;
+      }
+
+      .action b {
+        display: block;
+        color: var(--secondary);
+        font-size: 26px;
+        line-height: 1.3;
+        font-weight: 600;
+      }
+
+      .action span {
+        display: block;
+        margin-top: 12px;
+        color: var(--quiet);
+        font-size: 22px;
+        line-height: 1.45;
+      }
+
+      .rule {
+        width: 100%;
+        height: 1px;
+        background: rgba(0,77,153,0.12);
+        margin: 42px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="main" data-start="0" data-duration="59.8" data-width="1920" data-height="1080" data-fps="30">
+      <section id="s1" class="scene clip" data-start="0" data-duration="7" data-track-index="0">
+        <div class="content">
+          <div class="topline"><span class="mark">은행 네트워크 협의체</span></div>
+          <div class="quote-wrap">
+            <div>
+              <div class="kicker clip" data-start="0.2" data-duration="6.2" data-track-index="2">진행상황 보고</div>
+              <h1 class="hero-title clip" data-start="0.4" data-duration="6.2" data-track-index="3">은행 네트워크 협의체 구성(안)</h1>
+              <p class="subtitle clip" data-start="0.8" data-duration="5.8" data-track-index="4">참가기관 반응조사 결과를 바탕으로 실무 수요에 맞춘 은행 네트워크 협의체 운영</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<section id="s2" class="scene clip" data-start="6.6" data-duration="7" data-track-index="1">
+        <div class="content">
+          <div class="topline"><span class="mark">READINESS SIGNAL</span><span>사전 의견취합 기준</span></div>
+          <div class="kicker clip" data-start="6.8" data-duration="6.1" data-track-index="2">01 / 반응조사 결과</div>
+          <h2 class="slide-title clip" data-start="7" data-duration="6" data-track-index="3">협의체 구성 필요성 확인</h2>
+          <div class="stats-grid">
+            <div class="panel stat-card clip" data-start="7.3" data-duration="5.6" data-track-index="4">
+              <div class="stat-label">의견취합 대상</div>
+              <div class="stat-number">22</div>
+              <div class="stat-caption">개 참가기관</div>
+            </div>
+            <div class="panel stat-card clip" data-start="7.45" data-duration="5.45" data-track-index="5">
+              <div class="stat-label">응답 기관</div>
+              <div class="stat-number">21</div>
+              <div class="stat-caption">미회신 1개 기관</div>
+            </div>
+            <div class="panel stat-card clip" data-start="7.6" data-duration="5.3" data-track-index="6">
+              <div class="stat-label">응답률</div>
+              <div class="stat-number small">95.5%</div>
+              <div class="stat-caption">실무 채널 활성화 확인</div>
+            </div>
+            <div class="panel stat-card clip" data-start="7.75" data-duration="5.15" data-track-index="7">
+              <div class="stat-label">참여 의향</div>
+              <div class="stat-number green">20</div>
+              <div class="stat-caption">찬성 또는 참여 가능</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<section id="s3" class="scene clip" data-start="13.2" data-duration="7" data-track-index="0">
+        <div class="content">
+          <div class="topline"><span class="mark">BANK REACTIONS</span><span>우호적이나 실무형 조건 존재</span></div>
+          <div class="kicker clip" data-start="13.4" data-duration="6.1" data-track-index="2">02 / 반응 해석</div>
+          <h2 class="slide-title clip" data-start="13.6" data-duration="6" data-track-index="3">참여 긍정 기조 및 운영 조율 과제</h2>
+          <div class="two-col">
+            <ul class="bullets clip" data-start="13.95" data-duration="5.6" data-track-index="4">
+              <li>20개 기관이 참여 의향을 보여 실무 협의체 출범 명분이 이미 형성되었습니다.</li>
+              <li>일부 기관의 우려는 기존 협의체 중복, 인사이동, 일정 부담처럼 운영 설계 영역에 집중되어 있습니다.</li>
+              <li>기술 주제 중심 논의, 사고 사례 공유, 일정 사전 공유 요구가 반복적으로 확인되었습니다.</li>
+            </ul>
+            <div class="panel evidence clip" data-start="14.25" data-duration="5.3" data-track-index="5">
+              <div class="evidence-row"><span class="tag">호응</span><span>은행 담당자들은 네트워크 신기술, 장애 사례, 보안 이슈를 다루는 정기 채널에 실익을 느끼고 있습니다.</span></div>
+              <div class="evidence-row"><span class="tag">조율</span><span>지방 소재 기관은 1박 일정이나 이동 부담을 고려한 일정 설계를 요청했습니다.</span></div>
+              <div class="evidence-row"><span class="tag">관리</span><span>기존 부서장 회의와 중복되지 않도록 실무 기술 중심으로 포지셔닝하면 반대 사유를 흡수할 수 있습니다.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<section id="s4" class="scene clip" data-start="19.8" data-duration="7" data-track-index="1">
+        <div class="content">
+          <div class="topline"><span class="mark">VOICE OF BANKS</span><span>실무 수요</span></div>
+          <div class="kicker clip" data-start="20" data-duration="6.1" data-track-index="2">03 / 주요 의견</div>
+          <h2 class="slide-title clip" data-start="20.2" data-duration="6" data-track-index="3">실무형 기술 공유 수요 확인</h2>
+          <div class="opinion-grid">
+            <div class="panel opinion clip" data-start="20.55" data-duration="5.4" data-track-index="4">
+              <h3>신기술과 네트워크 이슈 공유</h3>
+              <p>새로운 네트워크 기술, 구성 변화, 최근 보안 이슈를 함께 점검하는 자리를 기대합니다.</p>
+            </div>
+            <div class="panel opinion clip" data-start="20.7" data-duration="5.25" data-track-index="5">
+              <h3>장애 및 운영 사례 논의</h3>
+              <p>참가기관별 장애 경험과 문제 해결 과정을 공유하면 공동망 운영 안정성에 직접 도움이 됩니다.</p>
+            </div>
+            <div class="panel opinion clip" data-start="20.85" data-duration="5.1" data-track-index="6">
+              <h3>기술 주제 중심 인터뷰</h3>
+              <p>형식적 회의보다 담당자가 실제로 다루는 기술 주제를 중심으로 묻고 답하는 방식을 선호합니다.</p>
+            </div>
+            <div class="panel opinion clip" data-start="21" data-duration="4.95" data-track-index="7">
+              <h3>일정 사전 공유와 지방기관 배려</h3>
+              <p>사전 일정 확정, 이동시간 고려, 필요 시 1박 일정 검토가 참여 지속성을 높입니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<section id="s5" class="scene clip" data-start="26.4" data-duration="7" data-track-index="0">
+        <div class="content">
+          <div class="topline"><span class="mark">OPERATING MODEL</span><span>호응 유지 방식</span></div>
+          <div class="kicker clip" data-start="26.6" data-duration="6.1" data-track-index="2">04 / 의견 반영 구성</div>
+          <h2 class="slide-title clip" data-start="26.8" data-duration="6" data-track-index="3">의견 기반 운영 방향 설정</h2>
+          <div class="compare-grid">
+            <div class="panel compare-card clip" data-start="27.15" data-duration="5.4" data-track-index="4">
+              <h3 class="compare-title">반기 1회</h3>
+              <p class="compare-body">응답 기관 다수가 반기 단위 일정을 선호했습니다. 부담을 낮추고 참석률을 안정화합니다.</p>
+              <div class="compare-proof">근거: 반기별 1회 선호 15개 기관</div>
+            </div>
+            <div class="panel compare-card clip" data-start="27.3" data-duration="5.25" data-track-index="5">
+              <h3 class="compare-title">필요 주제는 별도 딥다이브</h3>
+              <p class="compare-body">N2SF, 암호화 전환, 장애 사례처럼 긴급하거나 전문적인 주제는 소규모 심화 세션으로 분리합니다.</p>
+              <div class="compare-proof">효과: 중복 회의 우려 완화</div>
+            </div>
+            <div class="panel compare-card clip" data-start="27.45" data-duration="5.1" data-track-index="6">
+              <h3 class="compare-title">식사 교류로 담당자 채널 확보</h3>
+              <p class="compare-body">공식 설명 이후 비공식 교류를 배치해 기관별 협조 요청의 심리적 장벽을 낮춥니다.</p>
+              <div class="compare-proof">효과: 후속 협의 속도 향상</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<section id="s6" class="scene clip" data-start="33" data-duration="7" data-track-index="1">
+        <div class="content">
+          <div class="topline"><span class="mark">AGENDA DESIGN</span><span>3부 구성</span></div>
+          <div class="kicker clip" data-start="33.2" data-duration="6.1" data-track-index="2">05 / 간담회 구성</div>
+          <h2 class="slide-title clip" data-start="33.4" data-duration="6" data-track-index="3">3부 간담회 구성</h2>
+          <div class="agenda">
+            <div class="panel step-card clip" data-start="33.75" data-duration="5.5" data-track-index="4">
+              <div class="step-no">1</div>
+              <div class="step-part">PART 01</div>
+              <h3 class="step-title">참가기관 데이터 암호화 및 네트워크 구성 고도화</h3>
+              <p class="step-text">은행 담당자에게 추진 방향을 소개하고 기관별 협조 필요사항을 명확히 공유합니다.</p>
+              <div class="mini-outcome">결과: 정책 이해와 후속 협조 채널 확보</div>
+            </div>
+            <div class="panel step-card clip" data-start="33.95" data-duration="5.3" data-track-index="5">
+              <div class="step-no">2</div>
+              <div class="step-part">PART 02</div>
+              <h3 class="step-title">망분리 폐지와 N2SF 보안체계 전환</h3>
+              <p class="step-text">네트워크 인프라 변화와 은행권 보안 운영의 시사점을 실무 관점으로 논의합니다.</p>
+              <div class="mini-outcome">결과: 공통 이슈 발굴과 의제 확장</div>
+            </div>
+            <div class="panel step-card clip" data-start="34.15" data-duration="5.1" data-track-index="6">
+              <div class="step-no">3</div>
+              <div class="step-part">PART 03</div>
+              <h3 class="step-title">저녁식사와 담당자 간 교류</h3>
+              <p class="step-text">기관별 담당자 관계를 만들고, 이후 협조 요청이 가능한 비공식 소통 기반을 확보합니다.</p>
+              <div class="mini-outcome">결과: 신뢰 기반의 상시 네트워크 형성</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<section id="s7" class="scene clip" data-start="39.6" data-duration="7" data-track-index="0">
+        <div class="content">
+          <div class="topline"><span class="mark">PART 01 BASIS</span><span>요약문 반영</span></div>
+          <div class="kicker clip" data-start="39.8" data-duration="6.1" data-track-index="2">06 / 1부 고도화안</div>
+          <h2 class="slide-title clip" data-start="40" data-duration="6" data-track-index="3">VPN 터널 방식 전환 협조 요청</h2>
+          <div class="two-col">
+            <div class="panel network-panel tunnel-diagram clip" data-start="40.3" data-duration="5.5" data-track-index="4">
+              <div class="diagram-label">기관라우터 제외 후 터널모드 단순 구조</div>
+              <div class="center-vpn-row">
+                <div class="vpn-box"><strong>강남 센터VPN</strong><span>서비스IP 경로 송신</span></div>
+                <div class="vpn-box"><strong>분당 센터VPN</strong><span>서비스IP 경로 송신</span></div>
+              </div>
+              <div class="tunnel-band">Tunnel Mode<br />센터VPN ↔ 기관VPN</div>
+              <div class="branch-vpn-row">
+                <div class="vpn-box branch-vpn"><strong>기관VPN</strong><span>서비스IP 직접 수신<br />NAT 대역 송신</span></div>
+                <div class="removed-router"><strong>기관라우터</strong><span>고도화 구성에서 제외</span></div>
+              </div>
+              <div class="route-notes">
+                <div class="route-note">VPN Peer IP는 회선 경로로만 처리</div>
+                <div class="route-note">QoS와 부하분산은 VPN 기준 점검</div>
+              </div>
+            </div>
+            <ul class="bullets clip" data-start="40.55" data-duration="5.25" data-track-index="5">
+              <li>기관라우터를 경유하지 않는 기관VPN 단독 구조로 단순화합니다.</li>
+              <li>우리원 서비스IP는 VPN 터널로 기관VPN이 직접 수신하고, 기관 NAT 대역은 센터VPN으로 송신합니다.</li>
+              <li>전용회선 부하분산과 QoS는 VPN 장비 기준으로 사전 점검합니다.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+<section id="s8" class="scene clip" data-start="46.2" data-duration="7" data-track-index="1">
+        <div class="content">
+          <div class="topline"><span class="mark">PART 02 BASIS</span><span>보안체계 전환 논의</span></div>
+          <div class="kicker clip" data-start="46.4" data-duration="6.1" data-track-index="2">08 / 2부 N2SF</div>
+          <h2 class="slide-title clip" data-start="46.6" data-duration="6" data-track-index="3">N2SF 전환 시사점 공유</h2>
+          <div class="flow-grid">
+            <div class="panel flow-card clip" data-start="46.95" data-duration="5.5" data-track-index="4">
+              <div class="flow-label">FROM</div>
+              <h3 class="flow-title">물리 분리와 경계 중심 통제</h3>
+              <p class="flow-text">접속 위치와 망 구분에 의존해 위험을 낮추던 방식입니다.</p>
+            </div>
+            <div class="panel flow-card clip" data-start="47.1" data-duration="5.35" data-track-index="5">
+              <div class="flow-label">SHIFT</div>
+              <h3 class="flow-title">업무 단위 접근과 실시간 검증</h3>
+              <p class="flow-text">사용자, 단말, 앱, 데이터 흐름을 맥락별로 확인해야 합니다.</p>
+            </div>
+            <div class="panel flow-card clip" data-start="47.25" data-duration="5.2" data-track-index="6">
+              <div class="flow-label">NETWORK</div>
+              <h3 class="flow-title">암호화 경로와 세분화된 구간</h3>
+              <p class="flow-text">네트워크는 단순 연결망이 아니라 정책 적용 지점이 됩니다.</p>
+            </div>
+            <div class="panel flow-card clip" data-start="47.4" data-duration="5.05" data-track-index="7">
+              <div class="flow-label">ACTION</div>
+              <h3 class="flow-title">관측성과 장애 대응 프로세스</h3>
+              <p class="flow-text">접속 정책 변화가 장애로 번지지 않도록 운영 지표를 공유합니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<section id="s9" class="scene clip" data-start="52.8" data-duration="7" data-track-index="0">
+        <div class="content">
+          <div class="topline"><span class="mark">EXECUTIVE SUMMARY</span><span>후속 실행 준비</span></div>
+          <div class="quote-wrap">
+            <div>
+              <div class="kicker clip" data-start="53" data-duration="6.1" data-track-index="2">08 / 결론</div>
+              <p class="quote clip" data-start="53.2" data-duration="6" data-track-index="3">실무자 의견이 반영된 실무형 간담회로 준비</p>
+              <p class="quote-meta clip" data-start="53.65" data-duration="5.55" data-track-index="4">다음 단계는 초청 문안 확정, 기관별 참석자 확인, 1부 협조 요청사항 정리, 2부 N2SF 관련 강연자 섭외입니다.</p>
+              <div class="final-actions">
+                <div class="panel action clip" data-start="54.05" data-duration="5.1" data-track-index="5"><b>초청 확정</b><span>취지와 기대효과를 선명하게 전달</span></div>
+                <div class="panel action clip" data-start="54.2" data-duration="4.95" data-track-index="6"><b>질문 배포</b><span>기술 논의를 미리 준비하도록 안내</span></div>
+                <div class="panel action clip" data-start="54.35" data-duration="4.8" data-track-index="7"><b>기관별 메모</b><span>우려와 선호 일정을 사전에 반영</span></div>
+                <div class="panel action clip" data-start="54.5" data-duration="4.65" data-track-index="8"><b>교류 운영</b><span>담당자 채널을 지속 협력 기반으로 전환</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const scenes = [
+        ["#s1", 0],
+        ["#s2", 6.6],
+        ["#s3", 13.2],
+        ["#s4", 19.8],
+        ["#s5", 26.4],
+        ["#s6", 33],
+        ["#s7", 39.6],
+        ["#s8", 46.2],
+        ["#s9", 52.8]
+      ];
+      scenes.forEach(([selector, at], index) => {
+        if (index > 0) {
+          tl.from(selector, { opacity: 0, filter: "blur(12px)", duration: 0.45, ease: "power2.out" }, at);
+        }
+        tl.from(`${selector} [clip]`, {
+          y: 22,
+          opacity: 0,
+          duration: 0.55,
+          stagger: 0.07,
+          ease: "power2.out"
+        }, at + 0.15);
+      });
+
+      window.__timelines.main = tl;
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+{
+  "name": "agent-slide-maker-easy",
+  "version": "1.0.0",
+  "description": "HyperFrames slide project workspace",
+  "main": "index.js",
+  "scripts": {
+    "hyperframes": "powershell -NoProfile -ExecutionPolicy Bypass -Command node node_modules/hyperframes/dist/cli.js",
+    "lint": "powershell -NoProfile -ExecutionPolicy Bypass -Command node node_modules/hyperframes/dist/cli.js lint topics/hangul-600",
+    "preview": "powershell -NoProfile -ExecutionPolicy Bypass -Command node node_modules/hyperframes/dist/cli.js preview topics/hangul-600 --port 3000",
+    "render": "powershell -NoProfile -ExecutionPolicy Bypass -Command node node_modules/hyperframes/dist/cli.js render topics/hangul-600",
+    "lint:briefing": "powershell -NoProfile -ExecutionPolicy Bypass -Command node node_modules/hyperframes/dist/cli.js lint topics/bank-network-briefing",
+    "preview:briefing": "powershell -NoProfile -ExecutionPolicy Bypass -Command node node_modules/hyperframes/dist/cli.js preview topics/bank-network-briefing --port 3000",
+    "render:briefing": "powershell -NoProfile -ExecutionPolicy Bypass -Command node node_modules/hyperframes/dist/cli.js render topics/bank-network-briefing"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Canine89/agent-slide-maker-easy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Canine89/agent-slide-maker-easy/issues"
+  },
+  "homepage": "https://github.com/Canine89/agent-slide-maker-easy#readme",
+  "devDependencies": {
+    "hyperframes": "^0.4.31"
+  }
+}
