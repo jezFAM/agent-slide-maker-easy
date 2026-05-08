@@ -1,0 +1,787 @@
+{
+  "method": "Codex-generated neutral background plus deterministic composition of local CI image files. CI assets are uniformly scaled only; card backgrounds and text labels are separate presentation layers.",
+  "background": "Codex-generated neutral background used only as a non-logo backdrop",
+  "output": "agent-slide-maker-easy/topics/participant-network-modernization/assets/cover_participant_network_verified.png",
+  "canvas_size_px": [
+    1920,
+    1080
+  ],
+  "orbit_center_px": [
+    1280,
+    540
+  ],
+  "kftc_logo_center_px": [
+    1280,
+    540
+  ],
+  "institution_count": 22,
+  "kakaobank_official_source": "https://www.kakaobank.com/view/about/brand/resource",
+  "card_size_px": [
+    148,
+    116
+  ],
+  "layout": "12 outer orbit cards + 10 inner orbit cards around KFTC hub",
+  "institutions": [
+    {
+      "index": 1,
+      "institution": "한국은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/bok.png",
+      "source_size_px": [
+        32,
+        32
+      ],
+      "cropped_source_size_px": [
+        32,
+        32
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 1.5,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1280,
+        150
+      ],
+      "card_bbox_px": [
+        1206,
+        92,
+        1354,
+        208
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 2,
+      "institution": "산업은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/kdb.png",
+      "source_size_px": [
+        16,
+        16
+      ],
+      "cropped_source_size_px": [
+        16,
+        14
+      ],
+      "rendered_size_px": [
+        55,
+        48
+      ],
+      "uniform_scale_factor": 3.428571,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1540,
+        202
+      ],
+      "card_bbox_px": [
+        1466,
+        144,
+        1614,
+        260
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 3,
+      "institution": "NH농협",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/nh.png",
+      "source_size_px": [
+        16,
+        16
+      ],
+      "cropped_source_size_px": [
+        12,
+        16
+      ],
+      "rendered_size_px": [
+        36,
+        48
+      ],
+      "uniform_scale_factor": 3.0,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1730,
+        345
+      ],
+      "card_bbox_px": [
+        1656,
+        287,
+        1804,
+        403
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 4,
+      "institution": "신한은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/shinhan.png",
+      "source_size_px": [
+        32,
+        32
+      ],
+      "cropped_source_size_px": [
+        32,
+        32
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 1.5,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1800,
+        540
+      ],
+      "card_bbox_px": [
+        1726,
+        482,
+        1874,
+        598
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 5,
+      "institution": "우리은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/woori.png",
+      "source_size_px": [
+        128,
+        128
+      ],
+      "cropped_source_size_px": [
+        128,
+        128
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 0.375,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1730,
+        735
+      ],
+      "card_bbox_px": [
+        1656,
+        677,
+        1804,
+        793
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 6,
+      "institution": "SC제일",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/sc.png",
+      "source_size_px": [
+        128,
+        128
+      ],
+      "cropped_source_size_px": [
+        128,
+        128
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 0.375,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1540,
+        877
+      ],
+      "card_bbox_px": [
+        1466,
+        819,
+        1614,
+        935
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 7,
+      "institution": "하나은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/hana.png",
+      "source_size_px": [
+        60,
+        60
+      ],
+      "cropped_source_size_px": [
+        55,
+        57
+      ],
+      "rendered_size_px": [
+        46,
+        48
+      ],
+      "uniform_scale_factor": 0.842105,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1280,
+        930
+      ],
+      "card_bbox_px": [
+        1206,
+        872,
+        1354,
+        988
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 8,
+      "institution": "IBK기업",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/ibk.png",
+      "source_size_px": [
+        16,
+        16
+      ],
+      "cropped_source_size_px": [
+        16,
+        16
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 3.0,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1020,
+        877
+      ],
+      "card_bbox_px": [
+        946,
+        819,
+        1094,
+        935
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 14,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 9,
+      "institution": "KB국민",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/kb.png",
+      "source_size_px": [
+        128,
+        128
+      ],
+      "cropped_source_size_px": [
+        128,
+        128
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 0.375,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        829,
+        735
+      ],
+      "card_bbox_px": [
+        755,
+        677,
+        903,
+        793
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 10,
+      "institution": "한국씨티",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/citi.png",
+      "source_size_px": [
+        32,
+        32
+      ],
+      "cropped_source_size_px": [
+        32,
+        32
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 1.5,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        760,
+        540
+      ],
+      "card_bbox_px": [
+        686,
+        482,
+        834,
+        598
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 11,
+      "institution": "Sh수협",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/suhyup.png",
+      "source_size_px": [
+        32,
+        32
+      ],
+      "cropped_source_size_px": [
+        30,
+        22
+      ],
+      "rendered_size_px": [
+        65,
+        48
+      ],
+      "uniform_scale_factor": 2.181818,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        829,
+        344
+      ],
+      "card_bbox_px": [
+        755,
+        286,
+        903,
+        402
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 12,
+      "institution": "iM뱅크",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/im.png",
+      "source_size_px": [
+        48,
+        48
+      ],
+      "cropped_source_size_px": [
+        48,
+        48
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 1.0,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1019,
+        202
+      ],
+      "card_bbox_px": [
+        945,
+        144,
+        1093,
+        260
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 13,
+      "institution": "부산은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/bnk-busan.png",
+      "source_size_px": [
+        114,
+        114
+      ],
+      "cropped_source_size_px": [
+        114,
+        114
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 0.421053,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1388,
+        292
+      ],
+      "card_bbox_px": [
+        1314,
+        234,
+        1462,
+        350
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 14,
+      "institution": "광주은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/kj.png",
+      "source_size_px": [
+        128,
+        128
+      ],
+      "cropped_source_size_px": [
+        128,
+        128
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 0.375,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1563,
+        387
+      ],
+      "card_bbox_px": [
+        1489,
+        329,
+        1637,
+        445
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 15,
+      "institution": "제주은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/jeju.png",
+      "source_size_px": [
+        125,
+        30
+      ],
+      "cropped_source_size_px": [
+        123,
+        30
+      ],
+      "rendered_size_px": [
+        114,
+        28
+      ],
+      "uniform_scale_factor": 0.926829,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1630,
+        540
+      ],
+      "card_bbox_px": [
+        1556,
+        482,
+        1704,
+        598
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": true,
+      "official_asset_note": null
+    },
+    {
+      "index": 16,
+      "institution": "전북은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/jb.png",
+      "source_size_px": [
+        16,
+        16
+      ],
+      "cropped_source_size_px": [
+        16,
+        16
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 3.0,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1563,
+        692
+      ],
+      "card_bbox_px": [
+        1489,
+        634,
+        1637,
+        750
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 17,
+      "institution": "경남은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/bnk-kyongnam.png",
+      "source_size_px": [
+        64,
+        64
+      ],
+      "cropped_source_size_px": [
+        64,
+        17
+      ],
+      "rendered_size_px": [
+        104,
+        28
+      ],
+      "uniform_scale_factor": 1.625,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1388,
+        787
+      ],
+      "card_bbox_px": [
+        1314,
+        729,
+        1462,
+        845
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 18,
+      "institution": "카카오뱅크",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/kakao.png",
+      "source_size_px": [
+        256,
+        256
+      ],
+      "cropped_source_size_px": [
+        256,
+        256
+      ],
+      "rendered_size_px": [
+        58,
+        58
+      ],
+      "uniform_scale_factor": 0.226562,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1171,
+        787
+      ],
+      "card_bbox_px": [
+        1097,
+        729,
+        1245,
+        845
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 14,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": "KakaoBank official brand asset symbol on yellow tile"
+    },
+    {
+      "index": 19,
+      "institution": "케이뱅크",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/kbank.png",
+      "source_size_px": [
+        128,
+        128
+      ],
+      "cropped_source_size_px": [
+        128,
+        128
+      ],
+      "rendered_size_px": [
+        48,
+        48
+      ],
+      "uniform_scale_factor": 0.375,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        996,
+        692
+      ],
+      "card_bbox_px": [
+        922,
+        634,
+        1070,
+        750
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 20,
+      "institution": "수출입은행",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/exim.png",
+      "source_size_px": [
+        150,
+        23
+      ],
+      "cropped_source_size_px": [
+        150,
+        23
+      ],
+      "rendered_size_px": [
+        104,
+        16
+      ],
+      "uniform_scale_factor": 0.693333,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        930,
+        540
+      ],
+      "card_bbox_px": [
+        856,
+        482,
+        1004,
+        598
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 14,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 21,
+      "institution": "토스뱅크",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/toss.png",
+      "source_size_px": [
+        128,
+        128
+      ],
+      "cropped_source_size_px": [
+        119,
+        111
+      ],
+      "rendered_size_px": [
+        51,
+        48
+      ],
+      "uniform_scale_factor": 0.432432,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        996,
+        387
+      ],
+      "card_bbox_px": [
+        922,
+        329,
+        1070,
+        445
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 13,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    },
+    {
+      "index": 22,
+      "institution": "새마을금고",
+      "source": "agent-slide-maker-easy/topics/participant-network-modernization/assets/institution-ci/kfcc.png",
+      "source_size_px": [
+        178,
+        40
+      ],
+      "cropped_source_size_px": [
+        178,
+        40
+      ],
+      "rendered_size_px": [
+        104,
+        23
+      ],
+      "uniform_scale_factor": 0.58427,
+      "aspect_ratio_preserved_by_uniform_scaling": true,
+      "card_center_px": [
+        1171,
+        292
+      ],
+      "card_bbox_px": [
+        1097,
+        234,
+        1245,
+        350
+      ],
+      "card_fully_within_canvas": true,
+      "label_bottom_margin_px": 14,
+      "label_clear_of_bottom_border": true,
+      "dark_card_for_white_ci": false,
+      "official_asset_note": null
+    }
+  ],
+  "card_overlaps": [],
+  "checks": {
+    "all_22_institutions_included": true,
+    "all_institution_assets_exist": true,
+    "all_ci_scaled_uniformly": true,
+    "all_cards_fully_within_canvas": true,
+    "all_labels_clear_bottom_border": true,
+    "no_card_overlap": true,
+    "jeju_uses_dark_card": true,
+    "kakaobank_uses_official_symbol_tile": true,
+    "kftc_center_equals_orbit_center": true,
+    "no_ai_generated_ci_used": true
+  }
+}

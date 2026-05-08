@@ -1,0 +1,2080 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>participant-network-modernization · Overview</title>
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f7fbff;
+        --paper: #ffffff;
+        --ice: #eaf5ff;
+        --ice-2: #f2f8ff;
+        --blue: #0064dd;
+        --blue-2: #0076f6;
+        --sky: #19a8e5;
+        --navy: #002b5c;
+        --poster-navy: #071f46;
+        --text: #102033;
+        --sub: #34506c;
+        --muted: #6f8297;
+        --line: rgba(0, 100, 221, 0.18);
+        --line-strong: rgba(0, 100, 221, 0.34);
+        --serial: #f5a623;
+        --ethernet: #0f9d78;
+        --font: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        --ui-bg: #e9eef5;
+        --ui-strip: #dbe4ee;
+        --ui-card: #ffffff;
+        --ui-text: #172033;
+        --ui-muted: #68758a;
+        --ui-accent: #0064dd;
+        --ui-accent-rgb: 0, 100, 221;
+      }
+
+      * { box-sizing: border-box; }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: var(--ui-bg);
+        color: var(--ui-text);
+        font-family: var(--font);
+        letter-spacing: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button { font: inherit; }
+
+      .overview-shell {
+        display: grid;
+        grid-template-columns: 348px minmax(0, 1fr);
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .strip {
+        min-width: 0;
+        overflow-y: auto;
+        padding: 16px;
+        background: var(--ui-strip);
+        border-right: 1px solid rgba(0, 77, 153, 0.16);
+      }
+
+      .strip-title {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin: 2px 4px 14px;
+        color: var(--ui-muted);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+      }
+
+      .strip-title::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--ui-accent);
+      }
+
+      .strip-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 150px);
+        gap: 12px;
+      }
+
+      .thumb {
+        position: relative;
+        width: 150px;
+        height: 84.375px;
+        padding: 0;
+        overflow: hidden;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 3px 12px rgba(16, 40, 72, 0.16);
+        cursor: pointer;
+      }
+
+      .thumb:hover { border-color: rgba(var(--ui-accent-rgb), 0.45); }
+      .thumb.active {
+        border-color: var(--ui-accent);
+        box-shadow: 0 6px 18px rgba(var(--ui-accent-rgb), 0.28);
+      }
+
+      .thumb .scene {
+        position: absolute;
+        inset: 0 auto auto 0;
+        display: flex;
+        transform: scale(0.078125);
+        transform-origin: 0 0;
+        pointer-events: none;
+      }
+
+      .thumb-label {
+        position: absolute;
+        top: 5px;
+        left: 6px;
+        z-index: 50;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 6px;
+        border-radius: 4px;
+        background: rgba(13, 28, 48, 0.88);
+        color: #fff;
+        font-size: 9px;
+        font-weight: 700;
+        opacity: 0;
+        transition: opacity 0.12s ease;
+      }
+
+      .thumb:hover .thumb-label,
+      .thumb.active .thumb-label { opacity: 0.94; }
+
+      .thumb-label code {
+        padding: 1px 4px;
+        border-radius: 3px;
+        background: var(--ui-accent);
+        color: #fff;
+        font-family: var(--font);
+        font-size: 8px;
+      }
+
+      .main {
+        min-width: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 24px 24px;
+      }
+
+      .main-header {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+
+      .main-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .main-title::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--ui-accent);
+      }
+
+      .header-right,
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav-btn,
+      .aim-btn,
+      .edit-btn {
+        border: 1px solid rgba(0, 77, 153, 0.16);
+        background: var(--ui-card);
+        color: var(--ui-text);
+        cursor: pointer;
+        box-shadow: 0 1px 4px rgba(16, 40, 72, 0.10);
+      }
+
+      .nav-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .nav-btn:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+
+      .aim-btn,
+      .edit-btn {
+        min-height: 36px;
+        padding: 0 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .nav-btn:not(:disabled):hover,
+      .aim-btn:hover,
+      .aim-btn.active,
+      .edit-btn:hover,
+      .edit-btn.active {
+        background: var(--ui-accent);
+        border-color: var(--ui-accent);
+        color: #fff;
+      }
+
+      .nav-index {
+        min-width: 250px;
+        text-align: center;
+        color: var(--ui-muted);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .nav-index .current { color: var(--ui-accent); }
+      .nav-index .skill {
+        display: inline-flex;
+        max-width: 170px;
+        margin-left: 8px;
+        padding: 3px 7px;
+        overflow: hidden;
+        border-radius: 5px;
+        background: rgba(255,255,255,0.7);
+        color: var(--ui-text);
+        letter-spacing: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: middle;
+      }
+
+      .detail {
+        min-height: 0;
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .detail-frame {
+        position: relative;
+        width: min(calc(100vh * 16 / 9 - 118px), calc(100vw - 420px));
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 0 0 1px rgba(0, 77, 153, 0.16), 0 18px 50px rgba(16, 40, 72, 0.22);
+        container-type: inline-size;
+      }
+
+      .detail-frame .scene {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        transform: scale(calc(100cqw / 1920px));
+        transform-origin: 0 0;
+      }
+
+      .detail-frame .scene.active { display: flex; }
+
+      /* Slide design */
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        display: flex;
+        flex-direction: column;
+        padding: 62px 92px 64px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 86% 18%, rgba(25,168,229,0.18) 0 2px, transparent 3px),
+          radial-gradient(circle at 75% 34%, rgba(0,100,221,0.16) 0 2px, transparent 3px),
+          radial-gradient(circle at 90% 52%, rgba(0,43,92,0.13) 0 2px, transparent 3px),
+          linear-gradient(90deg, rgba(0,100,221,0.055) 1px, transparent 1px),
+          linear-gradient(rgba(0,100,221,0.045) 1px, transparent 1px),
+          var(--paper);
+        background-size: auto, auto, auto, 124px 124px, 124px 124px, auto;
+      }
+
+      .scene::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 18px;
+        background: linear-gradient(90deg, var(--blue), var(--sky) 44%, var(--poster-navy) 44% 54%, transparent 54%);
+      }
+
+      .cover-scene {
+        padding: 72px 92px 62px;
+        background:
+          radial-gradient(circle at 84% 48%, rgba(25,168,229,0.16), transparent 34%),
+          linear-gradient(90deg, rgba(255,255,255,0.98) 0 50%, rgba(242,248,255,0.68) 76%, rgba(255,255,255,0.96) 100%);
+      }
+
+      .cover-scene::before {
+        z-index: 3;
+        height: 26px;
+        background: linear-gradient(90deg, var(--blue) 0 66%, var(--sky) 66% 80%, var(--poster-navy) 80% 100%);
+      }
+
+      .cover-top {
+        position: relative;
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 58px;
+      }
+
+      .cover-logo {
+        height: 46px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      .cover-doc-label {
+        color: var(--navy);
+        font-size: 21px;
+        font-weight: 900;
+      }
+
+      .content.cover-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        max-width: 880px;
+        min-height: 0;
+      }
+
+      .cover-copy {
+        position: relative;
+        z-index: 3;
+      }
+
+      .cover-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 18px;
+        color: var(--blue);
+        background: rgba(0,100,221,0.08);
+        border-left: 12px solid var(--blue);
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .cover-title {
+        max-width: 880px;
+        margin-top: 30px;
+        color: var(--text);
+        font-size: 106px;
+        font-weight: 900;
+        line-height: 1.05;
+      }
+
+      .cover-title strong {
+        color: var(--blue);
+      }
+
+      .cover-subtitle {
+        max-width: 810px;
+        margin-top: 30px;
+        color: var(--sub);
+        font-size: 34px;
+        font-weight: 700;
+        line-height: 1.48;
+      }
+
+      .cover-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        max-width: 820px;
+        margin-top: 42px;
+      }
+
+      .cover-tags span {
+        padding: 13px 18px;
+        color: var(--navy);
+        background: rgba(234,245,255,0.92);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font-size: 21px;
+        font-weight: 900;
+      }
+
+      .cover-visual-panel {
+        position: absolute;
+        right: 24px;
+        top: 80px;
+        z-index: 1;
+        width: 1220px;
+        height: 860px;
+        overflow: hidden;
+        border-radius: 8px;
+      }
+
+      .cover-visual-panel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: right center;
+        display: block;
+      }
+
+      .cover-visual-panel::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.18) 28%, rgba(255,255,255,0) 52%);
+        pointer-events: none;
+      }
+
+      .cover-footer {
+        position: absolute;
+        left: 92px;
+        right: 92px;
+        bottom: 34px;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 17px;
+        font-weight: 800;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      li,
+      span {
+        margin: 0;
+        word-break: keep-all;
+        line-break: strict;
+      }
+
+      .topline {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 52px;
+        padding-bottom: 18px;
+        border-bottom: 2px solid rgba(0,100,221,0.14);
+        color: var(--muted);
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .logo {
+        height: 34px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      .mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--navy);
+      }
+
+      .mark::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--blue);
+        box-shadow: 0 0 0 7px rgba(0,100,221,0.10);
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        align-self: flex-start;
+        min-height: 42px;
+        margin-top: 36px;
+        margin-bottom: 20px;
+        padding: 0 16px;
+        border-left: 12px solid var(--blue);
+        background: rgba(0,100,221,0.08);
+        color: var(--navy);
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .hero-title {
+        max-width: 1320px;
+        color: var(--text);
+        font-size: 88px;
+        font-weight: 900;
+        line-height: 1.08;
+      }
+
+      .hero-title strong,
+      .slide-title strong,
+      .accent { color: var(--blue); }
+
+      .slide-title {
+        max-width: 1440px;
+        color: var(--text);
+        font-size: 68px;
+        font-weight: 900;
+        line-height: 1.15;
+      }
+
+      .subtitle {
+        max-width: 1180px;
+        margin-top: 22px;
+        color: var(--sub);
+        font-size: 31px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .panel {
+        background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(242,248,255,0.98));
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 0 14px 34px rgba(0,43,92,0.06);
+      }
+
+      .badge-row,
+      .tag-grid,
+      .impact-grid,
+      .request-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .badge-row {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1020px;
+        margin-top: 46px;
+      }
+
+      .badge {
+        padding: 24px 26px;
+        border-top: 6px solid var(--blue);
+      }
+
+      .axis-map {
+        display: grid;
+        gap: 12px;
+        max-width: 1320px;
+        margin-top: 42px;
+      }
+
+      .axis-row {
+        display: grid;
+        grid-template-columns: 180px repeat(3, 1fr);
+        gap: 12px;
+        align-items: stretch;
+      }
+
+      .axis-row > * {
+        min-height: 86px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 18px;
+        background: rgba(255,255,255,0.97);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: var(--sub);
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 1.25;
+        text-align: center;
+      }
+
+      .axis-row strong {
+        background: var(--navy);
+        color: #fff;
+        font-size: 26px;
+      }
+
+      .axis-head > * {
+        min-height: 58px;
+        background: rgba(0,100,221,0.08);
+        color: var(--navy);
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .axis-head span {
+        background: transparent;
+        border: 0;
+      }
+
+      .axis-row.tobe > * {
+        border-color: rgba(0,100,221,0.28);
+      }
+
+      .axis-row.tobe strong {
+        background: var(--blue);
+      }
+
+      .axis-row.tobe span {
+        background: rgba(234,245,255,0.98);
+        color: var(--navy);
+      }
+
+      .badge b,
+      .impact-card b,
+      .request-card b,
+      .risk-card b {
+        display: block;
+        color: var(--navy);
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .badge span,
+      .impact-card span,
+      .request-card span,
+      .risk-card span {
+        display: block;
+        margin-top: 10px;
+        color: var(--sub);
+        font-size: 21px;
+        line-height: 1.45;
+      }
+
+      .poster-signal {
+        position: absolute;
+        right: 98px;
+        bottom: 112px;
+        width: 458px;
+        min-height: 344px;
+        padding: 34px;
+        color: #fff;
+        background: radial-gradient(circle at 68% 22%, rgba(25,168,229,0.75), transparent 36%), linear-gradient(160deg, #071f46, #003a83 58%, #0064dd);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .poster-signal::before,
+      .poster-signal::after {
+        content: "";
+        position: absolute;
+        inset: 44px;
+        border: 1px solid rgba(255,255,255,0.22);
+        border-radius: 50%;
+      }
+
+      .poster-signal::after { inset: 92px 70px 66px 118px; }
+      .signal-label {
+        position: relative;
+        z-index: 1;
+        color: rgba(255,255,255,0.72);
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .signal-main {
+        position: relative;
+        z-index: 1;
+        margin-top: 62px;
+        font-size: 48px;
+        font-weight: 900;
+        line-height: 1.18;
+      }
+
+      .signal-caption {
+        position: relative;
+        z-index: 1;
+        margin-top: 26px;
+        color: rgba(255,255,255,0.78);
+        font-size: 20px;
+        line-height: 1.45;
+      }
+
+      .stat-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-top: 38px;
+      }
+
+      .stat {
+        min-height: 180px;
+        padding: 26px;
+      }
+
+      .stat .num {
+        color: var(--blue);
+        font-size: 68px;
+        font-weight: 900;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .stat .label {
+        margin-top: 14px;
+        color: var(--sub);
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .tag-grid {
+        grid-template-columns: repeat(4, 1fr);
+        margin-top: 42px;
+      }
+
+      .tag-grid.triple {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1320px;
+      }
+
+      .tag-card {
+        min-height: 250px;
+        padding: 30px;
+        border-top: 6px solid var(--blue);
+      }
+
+      .tag-card .idx {
+        color: var(--sky);
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .tag-card h3 {
+        margin-top: 20px;
+        color: var(--navy);
+        font-size: 34px;
+        font-weight: 900;
+      }
+
+      .tag-card p {
+        margin-top: 16px;
+        color: var(--sub);
+        font-size: 23px;
+        line-height: 1.48;
+      }
+
+      .agenda-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px 22px;
+        max-width: 1320px;
+        margin-top: 42px;
+      }
+
+      .agenda-card {
+        display: grid;
+        grid-template-columns: 76px 1fr;
+        gap: 22px;
+        align-items: center;
+        min-height: 132px;
+        padding: 24px 28px;
+        border-left: 8px solid var(--blue);
+      }
+
+      .agenda-num {
+        display: inline-flex;
+        width: 60px;
+        height: 60px;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background: linear-gradient(135deg, var(--blue), var(--sky));
+        border-radius: 50%;
+        font-size: 25px;
+        font-weight: 900;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .agenda-card h3 {
+        color: var(--navy);
+        font-size: 30px;
+        font-weight: 900;
+      }
+
+      .agenda-card p {
+        margin-top: 8px;
+        color: var(--sub);
+        font-size: 21px;
+        line-height: 1.42;
+      }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-top: 58px;
+      }
+
+      .time-card {
+        min-height: 310px;
+        padding: 30px;
+        position: relative;
+      }
+
+      .time-card::before {
+        content: "";
+        position: absolute;
+        top: 58px;
+        left: -20px;
+        width: 20px;
+        height: 2px;
+        background: var(--line-strong);
+      }
+
+      .time-card:first-child::before { display: none; }
+
+      .year {
+        color: var(--blue);
+        font-size: 44px;
+        font-weight: 900;
+      }
+
+      .time-card h3 {
+        margin-top: 24px;
+        color: var(--navy);
+        font-size: 32px;
+        font-weight: 900;
+      }
+
+      .time-card p {
+        margin-top: 16px;
+        color: var(--sub);
+        font-size: 23px;
+        line-height: 1.46;
+      }
+
+      .compare-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+        margin-top: 46px;
+      }
+
+      .compare-card {
+        min-height: 410px;
+        padding: 34px;
+      }
+
+      .compare-card h3 {
+        color: var(--navy);
+        font-size: 38px;
+        font-weight: 900;
+      }
+
+      .compare-card .route {
+        margin-top: 28px;
+        padding: 20px;
+        color: var(--sub);
+        background: rgba(234,245,255,0.72);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font-size: 23px;
+        line-height: 1.5;
+      }
+
+      .compare-card ul {
+        margin: 26px 0 0;
+        padding-left: 26px;
+        color: var(--sub);
+        font-size: 24px;
+        line-height: 1.62;
+      }
+
+      .decision {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 28px;
+        padding: 12px 18px;
+        color: #fff;
+        background: var(--blue);
+        border-radius: 8px;
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .packet-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 48px;
+      }
+
+      .packet-card {
+        min-height: 430px;
+        padding: 34px;
+      }
+
+      .packet-card h3 {
+        color: var(--navy);
+        font-size: 38px;
+        font-weight: 900;
+      }
+
+      .packet {
+        display: grid;
+        grid-template-columns: 0.6fr 1.4fr;
+        height: 116px;
+        margin-top: 34px;
+        overflow: hidden;
+        border: 2px solid var(--line-strong);
+        border-radius: 10px;
+      }
+
+      .packet div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+        font-weight: 900;
+      }
+
+      .packet .head {
+        color: var(--navy);
+        background: #fff;
+      }
+
+      .packet .body {
+        color: #fff;
+        background: var(--blue);
+      }
+
+      .packet-card.tunnel .packet { grid-template-columns: 1fr; }
+      .packet-card.tunnel .body { background: linear-gradient(90deg, var(--poster-navy), var(--blue)); }
+
+      .packet-note {
+        margin-top: 28px;
+        color: var(--sub);
+        font-size: 26px;
+        line-height: 1.5;
+      }
+
+      .split-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+        margin-top: 44px;
+      }
+
+      .current-config-layout {
+        display: grid;
+        grid-template-columns: 500px minmax(0, 1fr);
+        gap: 30px;
+        margin-top: 38px;
+        min-height: 590px;
+      }
+
+      .current-summary {
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .current-summary h3 {
+        color: var(--navy);
+        font-size: 34px;
+        font-weight: 900;
+      }
+
+      .current-point {
+        padding: 20px 22px;
+        border-left: 8px solid var(--blue);
+        background: linear-gradient(90deg, rgba(234,245,255,0.96), rgba(255,255,255,0.86));
+        border-radius: 8px;
+      }
+
+      .current-point .label {
+        display: block;
+        color: var(--blue);
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .current-point .text {
+        display: block;
+        margin-top: 8px;
+        color: var(--text);
+        font-size: 27px;
+        font-weight: 900;
+        line-height: 1.32;
+      }
+
+      .diagram-slot {
+        position: relative;
+        min-height: 590px;
+        padding: 34px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+          linear-gradient(90deg, rgba(0,100,221,0.055) 1px, transparent 1px),
+          linear-gradient(rgba(0,100,221,0.045) 1px, transparent 1px),
+          linear-gradient(135deg, rgba(234,245,255,0.96), rgba(255,255,255,0.96));
+        background-size: 52px 52px, 52px 52px, auto;
+      }
+
+      .diagram-slot::before {
+        content: "";
+        position: absolute;
+        inset: 26px;
+        border: 3px dashed rgba(0,100,221,0.32);
+        border-radius: 8px;
+      }
+
+      .diagram-placeholder {
+        position: absolute;
+        inset: 26px;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.42);
+        text-align: center;
+      }
+
+      .diagram-placeholder .diagram-label {
+        color: var(--navy);
+        font-size: 46px;
+        font-weight: 900;
+      }
+
+      .diagram-placeholder .diagram-note {
+        color: var(--muted);
+        font-size: 24px;
+        font-weight: 800;
+      }
+
+      .flow-card {
+        min-height: 460px;
+        padding: 32px;
+      }
+
+      .slide9-grid {
+        grid-template-columns: 560px minmax(0, 1fr);
+        margin-top: 36px;
+      }
+
+      .slide9-flow-card {
+        min-height: 590px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+
+      .change-brief {
+        display: grid;
+        gap: 16px;
+      }
+
+      .change-brief-item {
+        padding: 20px 22px;
+        border-left: 8px solid var(--blue);
+        border-radius: 8px;
+        background: linear-gradient(90deg, rgba(234,245,255,0.96), rgba(255,255,255,0.88));
+      }
+
+      .change-brief-item strong {
+        display: block;
+        color: var(--blue);
+        font-size: 20px;
+        font-weight: 900;
+      }
+
+      .change-brief-item span {
+        display: block;
+        margin-top: 8px;
+        color: var(--text);
+        font-size: 25px;
+        font-weight: 900;
+        line-height: 1.35;
+      }
+
+      .bottom-flow {
+        margin-top: auto;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      .bottom-flow .flow-lane {
+        gap: 12px;
+        margin-top: 0;
+      }
+
+      .bottom-flow .node {
+        min-width: 150px;
+        min-height: 78px;
+        padding: 14px;
+        font-size: 20px;
+      }
+
+      .bottom-flow .function-list {
+        margin-top: 20px;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .flow-card h3 {
+        color: var(--navy);
+        font-size: 38px;
+        font-weight: 900;
+      }
+
+      .flow-lane {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 34px;
+      }
+
+      .node {
+        min-width: 190px;
+        min-height: 94px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        color: var(--navy);
+        background: #fff;
+        border: 2px solid var(--line-strong);
+        border-radius: 8px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 900;
+        line-height: 1.28;
+      }
+
+      .node.primary {
+        color: #fff;
+        background: linear-gradient(135deg, var(--blue), var(--poster-navy));
+        border-color: transparent;
+      }
+
+      .arrow {
+        flex: 1;
+        height: 2px;
+        background: var(--line-strong);
+        position: relative;
+      }
+
+      .arrow::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: -6px;
+        border-left: 10px solid var(--blue);
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+      }
+
+      .function-list {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-top: 42px;
+      }
+
+      .function-list span {
+        padding: 14px 12px;
+        color: var(--navy);
+        background: rgba(234,245,255,0.82);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        text-align: center;
+        font-size: 21px;
+        font-weight: 900;
+      }
+
+      .placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 130px;
+        margin-top: 28px;
+        color: var(--muted);
+        border: 2px dashed rgba(0,100,221,0.25);
+        border-radius: 8px;
+        font-size: 23px;
+        font-weight: 700;
+      }
+
+      .impact-grid,
+      .request-grid {
+        grid-template-columns: repeat(3, 1fr);
+        margin-top: 48px;
+      }
+
+      .impact-card,
+      .request-card,
+      .risk-card {
+        min-height: 320px;
+        padding: 34px;
+        border-top: 7px solid var(--blue);
+      }
+
+      .impact-icon {
+        display: inline-flex;
+        width: 64px;
+        height: 64px;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 28px;
+        border-radius: 50%;
+        color: #fff;
+        background: linear-gradient(135deg, var(--blue), var(--sky));
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .timing-layout {
+        display: grid;
+        grid-template-columns: 1.35fr 0.65fr;
+        gap: 26px;
+        margin-top: 26px;
+      }
+
+      .timing-table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border-radius: 8px;
+        font-size: 18px;
+      }
+
+      .timing-table th {
+        padding: 12px 14px;
+        color: #fff;
+        background: var(--navy);
+        text-align: left;
+        font-weight: 900;
+      }
+
+      .timing-table td {
+        padding: 8px 14px;
+        border-bottom: 1px solid rgba(0,100,221,0.12);
+        color: var(--sub);
+        background: rgba(255,255,255,0.86);
+        font-weight: 700;
+      }
+
+      .year-chip {
+        display: inline-flex;
+        min-width: 70px;
+        justify-content: center;
+        padding: 3px 8px;
+        color: var(--blue);
+        background: rgba(0,100,221,0.08);
+        border-radius: 999px;
+        font-weight: 900;
+      }
+
+      .side-note {
+        padding: 26px;
+      }
+
+      .side-note h3 {
+        color: var(--navy);
+        font-size: 30px;
+        font-weight: 900;
+      }
+
+      .side-note p,
+      .side-note li {
+        color: var(--sub);
+        font-size: 22px;
+        line-height: 1.5;
+      }
+
+      .side-note ul {
+        margin: 22px 0 0;
+        padding-left: 24px;
+      }
+
+      .serial-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 1120px;
+        gap: 18px;
+        margin-top: 48px;
+      }
+
+      .inst-chip {
+        width: 100%;
+        min-width: 0;
+        padding: 24px 26px;
+        color: var(--navy);
+        background: #fff;
+        border: 1px solid rgba(245,166,35,0.36);
+        border-left: 8px solid var(--serial);
+        border-radius: 8px;
+        font-size: 30px;
+        font-weight: 900;
+        box-shadow: 0 12px 28px rgba(0,43,92,0.06);
+      }
+
+      .note-line {
+        max-width: 1120px;
+        margin-top: 32px;
+        padding: 22px 26px;
+        color: var(--sub);
+        background: rgba(234,245,255,0.86);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font-size: 25px;
+        font-weight: 700;
+      }
+
+      .request-card { min-height: 300px; }
+      .request-card:nth-child(2) { border-top-color: var(--sky); }
+      .request-card:nth-child(3) { border-top-color: var(--serial); }
+
+      .closing {
+        margin-top: 50px;
+        padding: 34px 40px;
+        color: #fff;
+        background: linear-gradient(135deg, var(--poster-navy), var(--blue));
+        border-radius: 10px;
+        font-size: 46px;
+        font-weight: 900;
+        line-height: 1.28;
+      }
+
+      .brand {
+        position: absolute;
+        left: 92px;
+        bottom: 31px;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .brand-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--blue);
+        box-shadow: 0 0 0 6px rgba(0,100,221,0.10);
+      }
+
+      .slide-num {
+        position: absolute;
+        right: 92px;
+        bottom: 31px;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .slide-num .skill {
+        max-width: 300px;
+        overflow: hidden;
+        color: var(--blue);
+        font-size: 13px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .sep { color: rgba(0,100,221,0.34); }
+
+      /* Aim + Edit */
+      .aim-overlay {
+        position: fixed;
+        z-index: 9998;
+        display: none;
+        border: 2px solid var(--ui-accent);
+        border-radius: 3px;
+        background: rgba(var(--ui-accent-rgb), 0.12);
+        pointer-events: none;
+      }
+
+      .aim-tooltip {
+        position: fixed;
+        z-index: 9999;
+        display: none;
+        max-width: 560px;
+        padding: 7px 10px;
+        border-radius: 7px;
+        background: #172033;
+        color: #fff;
+        font-size: 11px;
+        line-height: 1.35;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        pointer-events: none;
+        box-shadow: 0 8px 24px rgba(16, 40, 72, 0.26);
+      }
+
+      .aim-toast {
+        position: fixed;
+        right: 24px;
+        bottom: 22px;
+        z-index: 10000;
+        max-width: 520px;
+        padding: 14px 18px;
+        border-radius: 10px;
+        background: #172033;
+        color: #fff;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.18s ease, transform 0.18s ease;
+        pointer-events: none;
+        box-shadow: 0 10px 30px rgba(16, 40, 72, 0.32);
+      }
+
+      .aim-toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .aim-toast b {
+        display: block;
+        color: #8cc7ff;
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+
+      .aim-toast code {
+        color: rgba(255,255,255,0.82);
+        font-family: var(--font);
+        font-size: 11px;
+        white-space: normal;
+      }
+
+      body.aim-active { cursor: crosshair; }
+      body.edit-mode #detail-frame [contenteditable="true"] {
+        outline: 2px dashed rgba(var(--ui-accent-rgb), 0.45);
+        outline-offset: 2px;
+        background: rgba(var(--ui-accent-rgb), 0.04);
+      }
+
+      body.edit-mode #detail-frame [contenteditable="true"]:focus {
+        outline: 2px solid var(--ui-accent);
+        outline-offset: 3px;
+      }
+
+      @media print {
+        @page { size: 1920px 1080px; margin: 0; }
+        html,
+        body {
+          width: 1920px;
+          height: auto;
+          overflow: visible;
+          background: #fff;
+        }
+        .strip,
+        .main-header,
+        .aim-overlay,
+        .aim-tooltip,
+        .aim-toast { display: none !important; }
+        .overview-shell,
+        .main,
+        .detail {
+          display: block;
+          width: 1920px;
+          height: auto;
+          padding: 0;
+          overflow: visible;
+          background: #fff;
+        }
+        .detail-frame {
+          width: 1920px;
+          height: auto;
+          overflow: visible;
+          border-radius: 0;
+          box-shadow: none;
+        }
+        .detail-frame .scene {
+          position: relative;
+          display: flex !important;
+          transform: none;
+          page-break-after: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overview-shell">
+      <aside class="strip">
+        <div class="strip-title">Participant Network Modernization</div>
+        <div class="strip-grid" id="strip-grid"></div>
+      </aside>
+
+      <main class="main">
+        <header class="main-header">
+          <div class="main-title">참가기관망 구성 고도화 · Overview</div>
+          <div class="header-right">
+            <button class="edit-btn" id="nav-edit" aria-label="text edit">Edit</button>
+            <button class="aim-btn" id="nav-aim" aria-label="aim inspector">Aim</button>
+            <div class="nav">
+              <button class="nav-btn" id="nav-prev" aria-label="previous">‹</button>
+              <div class="nav-index"><span class="current" id="nav-current">01</span><span class="sep"> / </span><span id="nav-total">13</span><span class="skill" id="nav-skill"></span></div>
+              <button class="nav-btn" id="nav-next" aria-label="next">›</button>
+            </div>
+          </div>
+        </header>
+
+        <div class="detail">
+          <div class="detail-frame" id="detail-frame">
+            <section class="scene cover-scene" data-slide="1" data-skill="hyperframes-slide-work-title">
+              <div class="cover-top"><img class="cover-logo" src="assets/logo_kftc_blue.png" alt="금융결제원" /><span class="cover-doc-label">협의체 공유자료</span></div>
+              <div class="cover-visual-panel">
+                <img src="assets/cover_participant_network_verified.png" alt="실제 CI 원본을 비율 유지로 합성한 금융공동망 형상화 이미지" />
+              </div>
+              <div class="content cover-content">
+                <div class="cover-copy">
+                  <div class="cover-eyebrow">금융공동망 참가기관망</div>
+                  <h1 class="cover-title">참가기관망<br /><strong>구성 고도화</strong><br />사업 소개</h1>
+                  <p class="cover-subtitle">기관 장비 교체 시 적용 구성과 기관별 협조사항 사전 공유</p>
+                  <div class="cover-tags">
+                    <span>네트워크 담당자 대상</span>
+                    <span>VPN 중심 접속 구성</span>
+                    <span>Tunnel Mode 전환</span>
+                    <span>기관별 협의사항</span>
+                  </div>
+                </div>
+              </div>
+              <div class="cover-footer"><span>금융결제원</span><span>참가기관 네트워크 담당자 협의체</span></div>
+            </section>
+
+            <section class="scene" data-slide="2" data-skill="hyperframes-slide-work-title-bullets">
+              <div class="topline"><span class="mark">목차</span><span>무엇이 · 어떻게 · 왜 · 협조사항</span></div>
+              <div class="content">
+                <div class="kicker">02 / 목차</div>
+                <h2 class="slide-title">무엇·어떻게·왜, <strong>순서별 확인</strong></h2>
+                <div class="agenda-grid">
+                  <div class="panel agenda-card"><div class="agenda-num">1</div><div><h3>현재 구성</h3><p>Transport 터널, 라우터 회선종단, 라우터·VPN 기능분담 확인</p></div></div>
+                  <div class="panel agenda-card"><div class="agenda-num">2</div><div><h3>현재 구성의 배경</h3><p>2008년 설계 당시 전용회선 효율과 VPN 장비 성능 제약 확인</p></div></div>
+                  <div class="panel agenda-card"><div class="agenda-num">3</div><div><h3>변경 지점</h3><p>터널방식, 회선종단, 기능위치 세 가지 변경 축 확인</p></div></div>
+                  <div class="panel agenda-card"><div class="agenda-num">4</div><div><h3>변경 이유</h3><p>지원 장비, VPN 직접 수용, QoS·NAT 위치 정리 배경 확인</p></div></div>
+                  <div class="panel agenda-card"><div class="agenda-num">5</div><div><h3>변경 상세</h3><p>Tunnel Mode와 기관VPN 직접 수용 구성을 순서대로 확인</p></div></div>
+                  <div class="panel agenda-card"><div class="agenda-num">6</div><div><h3>적용 범위와 협조</h3><p>기관별 적용 시점, 시리얼 회선 전환, 작업·검증 협의 확인</p></div></div>
+                </div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-title-bullets</span>2<span class="sep">/</span>13</div>
+            </section>
+
+            <section class="scene" data-slide="3" data-skill="hyperframes-slide-work-compare">
+              <div class="topline"><span class="mark">설명 기준</span><span>터널방식 → 회선종단 → 기능위치</span></div>
+              <div class="content">
+                <div class="kicker">03 / 설명 기준</div>
+                <h1 class="hero-title">현재·변경 후 <strong>동일 3축 비교</strong></h1>
+                <p class="subtitle">이후 슬라이드는 터널방식, 회선종단, 기능위치 순서로 읽으면 각 기관 장비 교체 시 확인할 항목이 명확해집니다.</p>
+                <div class="axis-map">
+                  <div class="axis-row axis-head"><span></span><b>1. 터널방식</b><b>2. 회선종단</b><b>3. 기능위치</b></div>
+                  <div class="axis-row"><strong>현재</strong><span>Transport Mode</span><span>기관라우터 수용</span><span>QoS: 라우터<br />NAT: VPN</span></div>
+                  <div class="axis-row tobe"><strong>변경</strong><span>Tunnel Mode</span><span>기관VPN 직접 수용</span><span>QoS·NAT: VPN 중심</span></div>
+                </div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-compare</span>3<span class="sep">/</span>13</div>
+            </section>
+            <section class="scene" data-slide="4" data-skill="hyperframes-slide-work-title-image">
+              <div class="topline"><span class="mark">현재 구성</span><span>Transport 터널 + 라우터 + VPN</span></div>
+              <div class="content">
+                <div class="kicker">04 / 현행 접속 경로</div>
+                <h2 class="slide-title">현행: <strong>Transport 터널 + 라우터 회선종단 + VPN 기능분담</strong></h2>
+                <div class="current-config-layout">
+                  <div class="panel current-summary">
+                    <h3>현행 구성 확인</h3>
+                    <div class="current-point"><span class="label">터널방식</span><span class="text">Transport Mode 기반 터널 구성</span></div>
+                    <div class="current-point"><span class="label">회선종단</span><span class="text">전용회선은 기관라우터에서 수용</span></div>
+                    <div class="current-point"><span class="label">기능위치</span><span class="text">QoS는 라우터, 암호화·NAT는 VPN 담당</span></div>
+                  </div>
+                  <div class="panel diagram-slot" aria-label="변경 전 상세 구성도 삽입 영역">
+                    <div class="diagram-placeholder">
+                      <div class="diagram-label">변경 전 상세 구성도</div>
+                      <div class="diagram-note">제공 도면 삽입 영역</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-title-image</span>4<span class="sep">/</span>13</div>
+            </section>
+            <section class="scene" data-slide="5" data-skill="hyperframes-slide-work-evolution-flow">
+              <div class="topline"><span class="mark">현행 구성의 출발점</span><span>2008 Transport Mode 설계</span></div>
+              <div class="content">
+                <div class="kicker">05 / 기존 구성 이해</div>
+                <h2 class="slide-title">2008년 설계 배경: <strong>안정성·효율 중심 구성</strong></h2>
+                <div class="timeline">
+                  <div class="panel time-card"><div class="year">1</div><h3>터널방식</h3><p>2008년 Transport Mode 설계 이후 현재까지 큰 틀을 유지했습니다.</p></div>
+                  <div class="panel time-card"><div class="year">2</div><h3>회선종단</h3><p>기관별 업무량 차이를 고려해 저속·고속 회선 수용이 가능한 라우터에 회선을 수용했습니다.</p></div>
+                  <div class="panel time-card"><div class="year">3</div><h3>기능위치</h3><p>당시 VPN 장비 성능 제약을 고려해 QoS는 기관라우터에서 수행했습니다.</p></div>
+                  <div class="panel time-card"><div class="year">현재</div><h3>장기 운영</h3><p>이 역할 분담 구조가 현재까지 큰 틀을 유지한 채 운영되어 왔습니다.</p></div>
+                </div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-evolution-flow</span>5<span class="sep">/</span>13</div>
+            </section>
+            <section class="scene" data-slide="6" data-skill="hyperframes-slide-work-title-tags">
+              <div class="topline"><span class="mark">이번 고도화에서 바뀌는 부분</span><span>터널 방식 · 회선 종단 · QoS 및 NAT</span></div>
+              <div class="content">
+                <div class="kicker">06 / 변경 지점</div>
+                <h2 class="slide-title">변경 지점: <strong>터널방식·회선종단·기능위치</strong></h2>
+                <div class="tag-grid triple">
+                  <div class="panel tag-card"><div class="idx">CHANGE 1</div><h3>터널 방식</h3><p>Transport Mode에서 Tunnel Mode 기준으로 전환합니다.</p></div>
+                  <div class="panel tag-card"><div class="idx">CHANGE 2</div><h3>회선 종단</h3><p>전용회선 종단이 기관라우터에서 기관VPN 직접 수용으로 이동합니다.</p></div>
+                  <div class="panel tag-card"><div class="idx">CHANGE 3</div><h3>QoS 및 NAT</h3><p>QoS·NAT 처리 위치를 기관VPN 기준으로 확인합니다.</p></div>
+                </div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-title-tags</span>6<span class="sep">/</span>13</div>
+            </section>
+            <section class="scene" data-slide="7" data-skill="hyperframes-slide-work-title-tags">
+              <div class="topline"><span class="mark">변경 이유</span><span>터널방식 · 회선종단 · 기능위치</span></div>
+              <div class="content">
+                <div class="kicker">07 / 변경 이유</div>
+                <h2 class="slide-title">변경 이유: <strong>지원 장비·접속 경로·기능 위치 정리</strong></h2>
+                <div class="impact-grid">
+                  <div class="panel impact-card"><div class="impact-icon">1</div><b>터널방식</b><span>Transport Mode 지원 제조사가 제한되어 장비 선택 폭이 좁아질 수 있습니다.</span></div>
+                  <div class="panel impact-card"><div class="impact-icon">2</div><b>회선종단</b><span>전용회선을 기관VPN에 직접 수용하는 구조로 접속 경로를 정리합니다.</span></div>
+                  <div class="panel impact-card"><div class="impact-icon">3</div><b>기능위치</b><span>장비 교체 시점에 QoS·NAT 처리 위치를 기관VPN 기준으로 확인합니다.</span></div>
+                </div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-title-tags</span>7<span class="sep">/</span>13</div>
+            </section>
+            <section class="scene" data-slide="8" data-skill="hyperframes-slide-work-compare">
+              <div class="topline"><span class="mark">변경 1</span><span>Transport Mode → Tunnel Mode</span></div>
+              <div class="content">
+                <div class="kicker">08 / 터널방식</div>
+                <h2 class="slide-title">터널방식: <strong>Transport Mode → Tunnel Mode</strong></h2>
+                <div class="packet-grid">
+                  <div class="panel packet-card"><h3>Transport Mode</h3><div class="packet"><div class="head">IP 헤더<br />평문</div><div class="body">데이터<br />암호화</div></div><p class="packet-note">원본 IP 헤더는 유지하고 데이터 부분만 암호화합니다.</p></div>
+                  <div class="panel packet-card tunnel"><h3>Tunnel Mode</h3><div class="packet"><div class="body">원본 IP 헤더 + 데이터 전체 암호화<br />새 IP 헤더 부여</div></div><p class="packet-note">전환 후 Peer, 터널 상태, 라우팅·NAT 검증은 Tunnel Mode 기준으로 확인합니다.</p></div>
+                </div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-compare</span>8<span class="sep">/</span>13</div>
+            </section>
+            <section class="scene" data-slide="9" data-skill="hyperframes-slide-work-title-image">
+              <div class="topline"><span class="mark">변경 2·3</span><span>회선종단은 VPN으로 · 기능위치는 VPN 중심으로</span></div>
+              <div class="content">
+                <div class="kicker">09 / 회선종단 · 기능위치</div>
+                <h2 class="slide-title">회선종단·기능위치: <strong>기관VPN 중심 전환</strong></h2>
+                <div class="split-grid slide9-grid">
+                  <div class="panel flow-card slide9-flow-card">
+                    <h3>변경 후 확인 포인트</h3>
+                    <div class="change-brief">
+                      <div class="change-brief-item"><strong>회선종단</strong><span>전용회선은 기관VPN에 직접 수용합니다.</span></div>
+                      <div class="change-brief-item"><strong>기능위치</strong><span>QoS·NAT는 기관VPN 중심으로 확인합니다.</span></div>
+                    </div>
+                    <div class="bottom-flow">
+                      <div class="flow-lane"><div class="node">전용회선</div><div class="arrow"></div><div class="node primary">기관VPN 중심<br />통합 장비</div></div>
+                      <div class="function-list"><span>회선 수용</span><span>암호화</span><span>QoS</span><span>NAT</span></div>
+                    </div>
+                  </div>
+                  <div class="panel diagram-slot" aria-label="변경 후 상세 구성도 삽입 영역">
+                    <div class="diagram-placeholder">
+                      <div class="diagram-label">변경 후 상세 구성도</div>
+                      <div class="diagram-note">제공 도면 삽입 영역</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-title-image</span>9<span class="sep">/</span>13</div>
+            </section>
+            <section class="scene" data-slide="10" data-skill="hyperframes-slide-work-stat">
+              <div class="topline"><span class="mark">협의체 대상기관별 적용 시점</span><span>한국은행 제외 21개 기관</span></div>
+              <div class="content">
+                <div class="kicker">10 / 장비 교체 적용 시점</div>
+                <h2 class="slide-title">적용 시점: <strong>장비 교체 시 변경 구성 동시 적용</strong></h2>
+                <div class="timing-layout">
+                  <table class="timing-table">
+                    <thead><tr><th>기관</th><th>주센터</th><th>DR센터</th><th>기관</th><th>주센터</th><th>DR센터</th></tr></thead>
+                    <tbody>
+                      <tr><td>신한은행</td><td><span class="year-chip">2026</span></td><td><span class="year-chip">2026</span></td><td>SC제일은행</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2029</span></td></tr>
+                      <tr><td>국민은행</td><td><span class="year-chip">2027</span></td><td><span class="year-chip">2026</span></td><td>부산은행</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2029</span></td></tr>
+                      <tr><td>케이뱅크</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2026</span></td><td>우리은행</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2029</span></td></tr>
+                      <tr><td>NH농협은행</td><td><span class="year-chip">2031</span></td><td><span class="year-chip">2026</span></td><td>전북은행</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2029</span></td></tr>
+                      <tr><td>기업은행</td><td><span class="year-chip">2032</span></td><td><span class="year-chip">2026</span></td><td>한국수출입은행</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2029</span></td></tr>
+                      <tr><td>토스뱅크</td><td><span class="year-chip">2027</span></td><td><span class="year-chip">2027</span></td><td>카카오뱅크</td><td><span class="year-chip">2030</span></td><td><span class="year-chip">2029</span></td></tr>
+                      <tr><td>광주은행</td><td><span class="year-chip">2027</span></td><td><span class="year-chip">2029</span></td><td>수협은행</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2031</span></td></tr>
+                      <tr><td>새마을금고중앙회</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2027</span></td><td>하나은행</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2031</span></td></tr>
+                      <tr><td>한국산업은행</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2027</span></td><td>경남은행</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2032</span></td></tr>
+                      <tr><td>아이엠뱅크</td><td><span class="year-chip">2031</span></td><td><span class="year-chip">2031</span></td><td>제주은행</td><td><span class="year-chip">2029</span></td><td><span class="year-chip">2032</span></td></tr>
+                      <tr><td>한국씨티은행</td><td><span class="year-chip">2032</span></td><td><span class="year-chip">2029</span></td><td></td><td></td><td></td></tr>
+                    </tbody>
+                  </table>
+                  <div class="panel side-note"><h3>확인 기준</h3><ul><li>적용시점은 도입연도 + 내용연수 7년 기준입니다.</li><li>2028년 상반기 기준은 전체 장비 교체가 아니라 시리얼 회선 전환 협의에만 해당합니다.</li><li>세부 작업계획은 매년 대상기관 확정 후 기관별로 조율합니다.</li></ul></div>
+                </div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-stat</span>10<span class="sep">/</span>13</div>
+            </section>
+            <section class="scene" data-slide="11" data-skill="hyperframes-slide-work-title-tags">
+              <div class="topline"><span class="mark">회선 전환 협의 대상</span><span>DR센터 시리얼 보유 기관</span></div>
+              <div class="content">
+                <div class="kicker">11 / 회선 전환 대상</div>
+                <h2 class="slide-title">회선 전환: <strong>DR센터 시리얼 보유 7개 기관</strong></h2>
+                <div class="serial-list">
+                  <div class="inst-chip">한국산업은행</div><div class="inst-chip">기업은행</div><div class="inst-chip">아이엠뱅크</div><div class="inst-chip">제주은행</div><div class="inst-chip">전북은행</div><div class="inst-chip">경남은행</div><div class="inst-chip">케이뱅크</div>
+                </div>
+                <div class="note-line">위 7개 기관은 DR센터 시리얼 회선의 이더넷 전환 협의 대상입니다. 그 외 기관은 장비 교체와 통신 검증 중심으로 협의합니다.</div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-title-tags</span>11<span class="sep">/</span>13</div>
+            </section>
+            <section class="scene" data-slide="12" data-skill="hyperframes-slide-work-title-tags">
+              <div class="topline"><span class="mark">기관별 협의 항목</span><span>장비 작업 · 회선 작업 · 통신 검증</span></div>
+              <div class="content">
+                <div class="kicker">12 / 기관별 협의</div>
+                <h2 class="slide-title">기관별 협의: <strong>장비 작업·회선 작업·통신 검증</strong></h2>
+                <div class="impact-grid">
+                  <div class="panel impact-card"><div class="impact-icon">1</div><b>장비 작업</b><span>기관VPN 포트, 전용회선 연결, QoS·NAT 처리 위치를 교체 구성 기준으로 확인합니다.</span></div>
+                  <div class="panel impact-card"><div class="impact-icon">2</div><b>회선 작업</b><span>시리얼 회선은 이더넷 전환과 회선사업자 작업 일정을 함께 조율합니다.</span></div>
+                  <div class="panel impact-card"><div class="impact-icon">3</div><b>통신 검증</b><span>터널 UP, 라우팅·NAT, QoS, 업무 통신, 장애 복구 확인 범위를 정리합니다.</span></div>
+                </div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-title-tags</span>12<span class="sep">/</span>13</div>
+            </section>
+            <section class="scene" data-slide="13" data-skill="hyperframes-slide-work-steps">
+              <div class="topline"><span class="mark">마무리</span><span>기관 네트워크 담당자 협조 요청</span></div>
+              <div class="content">
+                <div class="kicker">13 / 요청사항</div>
+                <h2 class="slide-title">협조 요청: <strong>일정 조율·검증 범위 확정</strong></h2>
+                <div class="request-grid">
+                  <div class="panel request-card"><b>1. 구성 변경 확인</b><span>회선 종단, VPN 터널 방식, QoS·NAT 처리 위치 변경을 확인합니다.</span></div>
+                  <div class="panel request-card"><b>2. 작업 일정 조율</b><span>장비 교체 일정, 출입, 작업시간, 회선사업자 작업, 테스트 시간을 협의합니다.</span></div>
+                  <div class="panel request-card"><b>3. 시리얼 회선 전환</b><span>DR센터 시리얼 보유 7개 기관은 2028년 상반기 전환 협의를 진행합니다.</span></div>
+                </div>
+                <div class="closing">장비 교체 시 새 VPN 중심 구성으로 전환됩니다.</div>
+              </div>
+              <div class="brand"><span class="brand-dot" aria-hidden="true"></span><span>금융결제원 · 참가기관망 구성 고도화</span></div>
+              <div class="slide-num"><span class="skill">hyperframes-slide-work-steps</span>13<span class="sep">/</span>13</div>
+            </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="aim-overlay" id="aim-overlay"></div>
+    <div class="aim-tooltip" id="aim-tooltip"></div>
+    <div class="aim-toast" id="aim-toast"></div>
+
+    <script>
+      (() => {
+        const frame = document.getElementById('detail-frame');
+        const strip = document.getElementById('strip-grid');
+        const slides = Array.from(frame.querySelectorAll('.scene'));
+        const prevBtn = document.getElementById('nav-prev');
+        const nextBtn = document.getElementById('nav-next');
+        const currentEl = document.getElementById('nav-current');
+        const totalEl = document.getElementById('nav-total');
+        const skillEl = document.getElementById('nav-skill');
+        const aimBtn = document.getElementById('nav-aim');
+        const editBtn = document.getElementById('nav-edit');
+        const overlay = document.getElementById('aim-overlay');
+        const tooltip = document.getElementById('aim-tooltip');
+        const toast = document.getElementById('aim-toast');
+        let current = 0;
+        let aimMode = false;
+        let editMode = false;
+        let toastTimer = null;
+        const origTexts = new Map();
+        const INLINE_TAGS = new Set(['SPAN','EM','STRONG','B','I','U','A','BR','CODE','MARK','SMALL']);
+
+        totalEl.textContent = String(slides.length).padStart(2, '0');
+
+        function makeThumb(slide, idx) {
+          const btn = document.createElement('button');
+          btn.className = 'thumb';
+          btn.type = 'button';
+          btn.dataset.target = String(idx + 1);
+          const clone = slide.cloneNode(true);
+          clone.classList.remove('active');
+          btn.appendChild(clone);
+          const label = document.createElement('span');
+          label.className = 'thumb-label';
+          label.innerHTML = `<code>${idx + 1}</code>${slide.dataset.skill.replace('hyperframes-slide-work-', '')}`;
+          btn.appendChild(label);
+          btn.addEventListener('click', () => show(idx));
+          return btn;
+        }
+
+        function rebuildThumb(idx) {
+          const old = strip.children[idx];
+          if (!old) return;
+          const fresh = makeThumb(slides[idx], idx);
+          strip.replaceChild(fresh, old);
+          if (idx === current) fresh.classList.add('active');
+        }
+
+        slides.forEach((slide, idx) => strip.appendChild(makeThumb(slide, idx)));
+
+        function show(idx) {
+          current = Math.max(0, Math.min(slides.length - 1, idx));
+          slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+          Array.from(strip.children).forEach((thumb, i) => thumb.classList.toggle('active', i === current));
+          currentEl.textContent = String(current + 1).padStart(2, '0');
+          skillEl.textContent = slides[current].dataset.skill;
+          prevBtn.disabled = current === 0;
+          nextBtn.disabled = current === slides.length - 1;
+          if (aimMode) hideAim();
+        }
+
+        prevBtn.addEventListener('click', () => show(current - 1));
+        nextBtn.addEventListener('click', () => show(current + 1));
+        document.addEventListener('keydown', (event) => {
+          if (editMode && document.activeElement && document.activeElement.isContentEditable) return;
+          if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === ' ') { show(current + 1); event.preventDefault(); }
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') { show(current - 1); event.preventDefault(); }
+          if (/^[0-9]$/.test(event.key)) {
+            const n = event.key === '0' ? 10 : parseInt(event.key, 10);
+            if (n >= 1 && n <= slides.length) show(n - 1);
+          }
+          if (event.key === 'Escape' && aimMode) exitAimMode();
+        });
+
+        function activeSlide() { return slides[current]; }
+
+        function partFor(el) {
+          if (el.dataset && el.dataset.slide) return `[data-slide="${el.dataset.slide}"]`;
+          if (el.className && typeof el.className === 'string') {
+            const classes = el.className.trim().split(/\s+/).filter(c => c && c !== 'active');
+            if (classes.length) return '.' + classes.join('.');
+          }
+          const parent = el.parentElement;
+          if (!parent) return el.tagName.toLowerCase();
+          const siblings = Array.from(parent.children).filter(c => c.tagName === el.tagName);
+          const idx = siblings.indexOf(el) + 1;
+          return `${el.tagName.toLowerCase()}:nth-of-type(${idx})`;
+        }
+
+        function buildSelector(el) {
+          const parts = [];
+          let cur = el;
+          while (cur && cur !== frame) {
+            parts.unshift(partFor(cur));
+            if (cur.dataset && cur.dataset.slide) break;
+            cur = cur.parentElement;
+          }
+          return parts.join(' > ');
+        }
+
+        function setOverlayTo(el) {
+          const rect = el.getBoundingClientRect();
+          overlay.style.display = 'block';
+          overlay.style.top = rect.top + 'px';
+          overlay.style.left = rect.left + 'px';
+          overlay.style.width = rect.width + 'px';
+          overlay.style.height = rect.height + 'px';
+          const sel = buildSelector(el);
+          tooltip.textContent = sel;
+          tooltip.style.display = 'block';
+          let top = rect.bottom + 7;
+          let left = rect.left;
+          const tip = tooltip.getBoundingClientRect();
+          if (top + tip.height > window.innerHeight - 8) top = rect.top - tip.height - 7;
+          if (left + tip.width > window.innerWidth - 8) left = window.innerWidth - tip.width - 8;
+          tooltip.style.top = Math.max(8, top) + 'px';
+          tooltip.style.left = Math.max(8, left) + 'px';
+        }
+
+        function hideAim() {
+          overlay.style.display = 'none';
+          tooltip.style.display = 'none';
+        }
+
+        function enterAimMode() {
+          aimMode = true;
+          document.body.classList.add('aim-active');
+          aimBtn.classList.add('active');
+        }
+
+        function exitAimMode() {
+          aimMode = false;
+          document.body.classList.remove('aim-active');
+          aimBtn.classList.remove('active');
+          hideAim();
+        }
+
+        function copyToClipboard(text) {
+          if (navigator.clipboard) return navigator.clipboard.writeText(text).catch(() => legacyCopy(text));
+          return legacyCopy(text);
+        }
+
+        function legacyCopy(text) {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+          return Promise.resolve();
+        }
+
+        function showToast(title, detail) {
+          toast.innerHTML = `<b>${title}</b><code>${String(detail).replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>`;
+          toast.classList.add('show');
+          if (toastTimer) clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        aimBtn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          if (aimMode) exitAimMode(); else enterAimMode();
+        });
+
+        document.addEventListener('mousemove', (event) => {
+          if (!aimMode) return;
+          const el = document.elementFromPoint(event.clientX, event.clientY);
+          const slide = activeSlide();
+          if (!el || !slide.contains(el)) { hideAim(); return; }
+          setOverlayTo(el);
+        });
+
+        document.addEventListener('click', (event) => {
+          if (!aimMode) return;
+          const el = document.elementFromPoint(event.clientX, event.clientY);
+          const slide = activeSlide();
+          if (!el || !slide.contains(el)) return;
+          event.preventDefault();
+          event.stopPropagation();
+          const sel = buildSelector(el);
+          copyToClipboard(sel).then(() => showToast('복사되었습니다', sel));
+          exitAimMode();
+        }, true);
+
+        function isTextOnlyLeaf(el) {
+          if (!el.children.length) return true;
+          return Array.from(el.children).every(c => INLINE_TAGS.has(c.tagName) && isTextOnlyLeaf(c));
+        }
+
+        function findEditableElements(scope) {
+          const out = [];
+          const walk = (el) => {
+            if (el.hasAttribute('aria-hidden')) return;
+            if (['IMG','SCRIPT','STYLE','TABLE','THEAD','TBODY','TR'].includes(el.tagName)) return;
+            if (isTextOnlyLeaf(el) && el.textContent.trim()) out.push(el);
+            else Array.from(el.children).forEach(walk);
+          };
+          Array.from(scope.children).forEach(walk);
+          return out;
+        }
+
+        function simpleSelector(el) {
+          if (el.className && typeof el.className === 'string') {
+            const classes = el.className.trim().split(/\s+/).filter(c => c && c !== 'active');
+            if (classes.length) return '.' + classes.join('.');
+          }
+          return el.tagName.toLowerCase();
+        }
+
+        function enterEditMode() {
+          editMode = true;
+          document.body.classList.add('edit-mode');
+          editBtn.classList.add('active');
+          editBtn.textContent = 'Done';
+          slides.forEach(slide => {
+            findEditableElements(slide).forEach(el => {
+              origTexts.set(el, el.innerHTML);
+              el.contentEditable = 'true';
+              el.spellcheck = false;
+            });
+          });
+        }
+
+        function exitEditMode() {
+          editMode = false;
+          document.body.classList.remove('edit-mode');
+          editBtn.classList.remove('active');
+          editBtn.textContent = 'Edit';
+          const bySlide = new Map();
+          origTexts.forEach((oldHTML, el) => {
+            el.removeAttribute('contenteditable');
+            const newHTML = el.innerHTML;
+            if (oldHTML.trim() !== newHTML.trim()) {
+              const slide = el.closest('[data-slide]');
+              const num = slide ? slide.dataset.slide : '?';
+              const skill = slide ? slide.dataset.skill : '';
+              if (!bySlide.has(num)) bySlide.set(num, { skill, changes: [] });
+              bySlide.get(num).changes.push({ sel: simpleSelector(el), old: oldHTML.trim(), next: newHTML.trim() });
+            }
+          });
+          origTexts.clear();
+          const total = Array.from(bySlide.values()).reduce((sum, group) => sum + group.changes.length, 0);
+          if (!total) return;
+          Array.from(bySlide.keys()).forEach(num => rebuildThumb(parseInt(num, 10) - 1));
+          let patch = `# Overview edits — participant-network-modernization (${total} change${total === 1 ? '' : 's'})\n\n`;
+          Array.from(bySlide.keys()).sort((a, b) => parseInt(a, 10) - parseInt(b, 10)).forEach(num => {
+            const group = bySlide.get(num);
+            patch += `## Slide ${num} (${group.skill})\n`;
+            group.changes.forEach(change => {
+              patch += `- ${change.sel}\n  OLD: ${change.old}\n  NEW: ${change.next}\n`;
+            });
+            patch += '\n';
+          });
+          fetch('/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ patch })
+          }).then(r => {
+            if (!r.ok) throw new Error('save failed');
+            return r.json();
+          }).then(result => showToast(`${result.applied}건 반영됨`, '파일 직접 수정')).catch(() => {
+            copyToClipboard(patch).then(() => showToast(`${total}개 변경 클립보드 복사됨`, '정적 서버에서는 대화창에 붙여넣어 반영 요청'));
+          });
+        }
+
+        editBtn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          if (editMode) exitEditMode(); else enterEditMode();
+        });
+
+        show(0);
+      })();
+    </script>
+  </body>
+</html>
