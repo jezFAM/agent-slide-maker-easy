@@ -16,7 +16,7 @@
 ## Commands
 
 ```bash
-npx hyperframes preview          # preview in browser (studio editor)
+npx hyperframes preview topics/<주제-이름> --port 3000   # preview (포트 3000 고정, AGENTS.md 규칙)
 npx hyperframes render       # render to MP4
 npx hyperframes lint         # validate compositions (errors + warnings)
 npx hyperframes lint --verbose  # include info-level findings
@@ -45,7 +45,7 @@ https://hyperframes.heygen.com/llms.txt
 이 프로젝트는 **주제별 서브프로젝트 패턴**을 쓴다. 루트는 워크스페이스, 실제 컴포지션은 `topics/<주제-이름>/` 안에 둔다.
 
 ```
-lab-hyperframes/
+agent-slide-maker-easy/
 ├── .codex/skills/               로컬 스킬 원본 (타 에이전트 skills는 심링크)
 ├── PROJECT.md                    사용자 가이드 (전체 흐름 설명)
 ├── hyperframes.json, meta.json   워크스페이스 마커

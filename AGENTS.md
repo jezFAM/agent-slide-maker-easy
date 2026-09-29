@@ -34,10 +34,10 @@ npx hyperframes preview --list
 npx hyperframes preview --kill-all
 
 # 3. 3000번을 다른 프로세스가 점유 중인지 확인
-lsof -nP -iTCP:3000 -sTCP:LISTEN
+netstat -ano | findstr :3000   # Windows (unix: lsof -nP -iTCP:3000 -sTCP:LISTEN)
 
 # 4. hyperframes 가 아니라면 PID로 종료 후 재시작
-kill <PID>
+taskkill /PID <PID> /F   # Windows (unix: kill <PID>)
 npx hyperframes preview topics/<주제-이름> --port 3000
 ```
 
